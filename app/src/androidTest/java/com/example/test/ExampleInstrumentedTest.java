@@ -1,4 +1,4 @@
-package com.example.knowyourlimit;
+package com.example.test;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.example.knowyourlimit", appContext.getPackageName());
+        assertEquals("com.example.test", appContext.getPackageName());
     }
 }
