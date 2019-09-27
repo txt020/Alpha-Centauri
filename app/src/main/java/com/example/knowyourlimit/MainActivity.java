@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText password;
     private EditText email;
     private Button signup;
+    private Button dirsign;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         password = (EditText)findViewById(R.id.passw);
         email = (EditText) findViewById(R.id.Email);
         signup = (Button)findViewById(R.id.Register);
+        dirsign = (Button)findViewById(R.id.dirSignIn);
 
         signup.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -33,5 +35,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        dirsign.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent2 = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent2);
+            }
+        });
+
     }
 }
