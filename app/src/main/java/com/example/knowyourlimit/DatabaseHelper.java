@@ -24,6 +24,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String USER_LOGS_COLUMN_TIMESTAMP = "user_log_timestamp";
     private static final String USER_LOGS_COLUMN_MONEY_AMOUNT = "user_log_money_amount";
     private static final String USER_LOGS_COLUMN_CATEGORY = "user_log_money_category";
+    private static final String USER_LOGS_FOREIGN_KEY_USER_ID = "user_id";
 
     //    private static final String USER_LOGS_COLUMN_
     private final static String CREATE_USERS_TABLE =
@@ -40,9 +41,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     USER_LOGS_COLUMN_MESSAGE + " VARCHAR(255)," +
                     USER_LOGS_COLUMN_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP," +
                     USER_LOGS_COLUMN_MONEY_AMOUNT + " INTEGER(255)," +
-                    "category varchar(255)," +
-                    "user_id INTEGER," +
-                    USER_LOGS_COLUMN_CATEGORY + " VARCHAR(255)," +
+                    USER_LOGS_COLUMN_CATEGORY + " varchar(255)," +
+                    USER_LOGS_FOREIGN_KEY_USER_ID + " INTEGER NOT NULL," +
                     "FOREIGN KEY (user_id) REFERENCES users(id)" +
                     ");";
 
@@ -98,15 +98,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.rawQuery(selectUser, null);
     }
 
-    public Cursor getPassword(String username) {
+    public Cursor getUserIDByUsername(String username) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selectUser = "SELECT user_id FROM" + USERS_TABLE + "WHERE username IS" + username;
+        return db.rawQuery(selectUser, null);
+    }
+
+    public Cursor getUserPassword(String username) {
         SQLiteDatabase db = this.getWritableDatabase();
         String selectUser = "SELECT password FROM" + USERS_TABLE + "WHERE username IS" + username;
         return db.rawQuery(selectUser, null);
     }
 
 
-    public void insertLog(String username, String message, int amount, String category) {
+    public boolean insertLog(String username, String message, int money, String category) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(USER_LOGS_COLUMN_MESSAGE, message);
+        contentValues.put(USER_LOGS_COLUMN_MONEY_AMOUNT, money);
+        contentValues.put(USER_LOGS_COLUMN_CATEGORY, category);
+        contentValues.put(USER_LOGS_FOREIGN_KEY_USER_ID, username);
+        long results = db.insert(USERS_TABLE, null, contentValues);
 
+        if (results == -1) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public void retrieveLogs(String username) {
