@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mydb = new DatabaseHelper(this);
-        mydb.register("Navid", "navid@jerkoff.com", "password");
+        mydb.insertUser("Navid", "navid@jerkoff.com", "password");
 
 
 

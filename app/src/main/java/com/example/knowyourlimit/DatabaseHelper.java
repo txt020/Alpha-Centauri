@@ -2,10 +2,9 @@ package com.example.knowyourlimit;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import androidx.annotation.Nullable;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -67,12 +66,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public boolean login(String username, String password) {
-
+        SQLiteDatabase db  = this.getWritableDatabase();
+        String selectUser = "SELECT * FROM" + TABLE_NAME + "WHERE username IS" + username + "AND password IS" + password;
+        Cursor res = db.rawQuery(selectUser, null);
         return true;
     }
 
-    public String getPassword(String username) {
-        return "a";
+    public Cursor getPassword(String username) {
+        SQLiteDatabase db  = this.getWritableDatabase();
+        String selectUser = "SELECT password FROM" + TABLE_NAME + "WHERE username IS" + username;
+        return db.rawQuery(selectUser, null);
     }
 
 
