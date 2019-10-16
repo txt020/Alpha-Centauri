@@ -16,8 +16,18 @@ public class MainActivity extends AppCompatActivity {
     private EditText email;
     private Button signup;
 
+    DatabaseHelper mydb;
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mydb = new DatabaseHelper(this);
+
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
