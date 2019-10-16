@@ -89,7 +89,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selectUser = "SELECT * FROM " + USERS_TABLE + " WHERE username IS " + username + " AND password IS " + password;
         Cursor result = db.rawQuery(selectUser, null);
         /*todo fix this when you know*/
-        return true;
+        if (result != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public Cursor getUser_ByUsername(String username) {
