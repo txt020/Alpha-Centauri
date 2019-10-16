@@ -65,7 +65,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public boolean login(String username, String password) {
+    public boolean userIsInDatabase(String username, String password) {
         SQLiteDatabase db  = this.getWritableDatabase();
         String selectUser = "SELECT * FROM" + TABLE_NAME + "WHERE username IS" + username + "AND password IS" + password;
         Cursor res = db.rawQuery(selectUser, null);
