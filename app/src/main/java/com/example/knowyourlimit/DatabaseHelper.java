@@ -36,7 +36,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "CREATE TABLE IF NOT EXISTS " + USER_LOGS_TABLE + "(" +
                     "user_log_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE," +
                     "user_log_message VARCHAR(255)," +
-                    "user_log_timestamp VARCHAR(255)," +
+                    "user_log_timestamp DATETIME DEFAULT CURRENT_TIMESTAMP," +
                     "user_log_money_amount INTEGER(255)," +
                     "user_id INTEGER," +
                     "FOREIGN KEY (user_id) REFERENCES users(id)" +
