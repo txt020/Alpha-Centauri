@@ -92,13 +92,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public Cursor getUserByUsername(String username) {
+    public Cursor getUser_ByUsername(String username) {
         SQLiteDatabase db = this.getWritableDatabase();
         String selectUser = "SELECT * FROM" + USERS_TABLE + "WHERE username IS" + username;
         return db.rawQuery(selectUser, null);
     }
 
-    public Cursor getUserIDByUsername(String username) {
+    public Cursor getUserID_ByUsername(String username) {
         SQLiteDatabase db = this.getWritableDatabase();
         String selectUser = "SELECT user_id FROM" + USERS_TABLE + "WHERE username IS" + username;
         return db.rawQuery(selectUser, null);
