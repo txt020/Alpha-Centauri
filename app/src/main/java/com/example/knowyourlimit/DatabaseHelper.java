@@ -23,22 +23,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String USER_LOGS_COLUMN_MESSAGE = "user_log_message";
     private static final String USER_LOGS_COLUMN_TIMESTAMP = "user_log_timestamp";
     private static final String USER_LOGS_COLUMN_MONEY_AMOUNT = "user_log_money_amount";
+    private static final String USER_LOGS_COLUMN_CATEGORY = "user_log_money_category";
+
 //    private static final String USER_LOGS_COLUMN_
     private final static String CREATE_USERS_TABLE =
             "CREATE TABLE IF NOT EXISTS " + USERS_TABLE + " (" +
-                    "user_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE," +
-                    "user_username VARCHAR(255) UNIQUE," +
-                    "user_email VARCHAR(255) UNIQUE," +
-                    "user_password VARCHAR(255)" +
+                    USERS_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE," +
+                    USERS_COLUMN_USERNAME + " VARCHAR(255) UNIQUE," +
+                    USERS_COLUMN_EMAIL + " VARCHAR(255) UNIQUE," +
+                    USERS_COLUMN_PASSWORD + " VARCHAR(255)" +
                     ");";
 
     private final static String CREATE_USER_LOGS_TABLE =
             "CREATE TABLE IF NOT EXISTS " + USER_LOGS_TABLE + "(" +
-                    "user_log_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE," +
-                    "user_log_message VARCHAR(255)," +
-                    "user_log_timestamp DATETIME DEFAULT CURRENT_TIMESTAMP," +
-                    "user_log_money_amount INTEGER(255)," +
+                    USER_LOGS_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE," +
+                    USER_LOGS_COLUMN_MESSAGE +" VARCHAR(255)," +
+                    USER_LOGS_COLUMN_TIMESTAMP +" DATETIME DEFAULT CURRENT_TIMESTAMP," +
+                    USER_LOGS_COLUMN_MONEY_AMOUNT + " INTEGER(255)," +
                     "user_id INTEGER," +
+                    "category varchar(255)," +
+                    USER_LOGS_COLUMN_CATEGORY + " VARCHAR(255)," +
                     "FOREIGN KEY (user_id) REFERENCES users(id)" +
                     ");";
 
