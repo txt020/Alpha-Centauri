@@ -40,8 +40,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     USER_LOGS_COLUMN_MESSAGE + " VARCHAR(255)," +
                     USER_LOGS_COLUMN_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP," +
                     USER_LOGS_COLUMN_MONEY_AMOUNT + " INTEGER(255)," +
-                    "user_id INTEGER," +
                     "category varchar(255)," +
+                    "user_id INTEGER," +
                     USER_LOGS_COLUMN_CATEGORY + " VARCHAR(255)," +
                     "FOREIGN KEY (user_id) REFERENCES users(id)" +
                     ");";
