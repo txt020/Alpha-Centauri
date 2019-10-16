@@ -129,15 +129,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor retrieveLogs(String user_usename, Integer user_id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String selectUser;
-//        no username
-        if ((user_usename.isEmpty() || user_usename == null) && user_id != null) {
-            selectUser = "SELECT * FROM" + USER_LOGS_TABLE + "WHERE " + USER_LOGS_FOREIGN_KEY_USER_ID + "IS " + user_id;
-        }
-//        no user_id
-        if ((!user_usename.isEmpty() || user_usename != null) && user_id == null) {
-            selectUser = "SELECT * FROM" + USER_LOGS_TABLE + "WHERE " + USER_LOGS_FOREIGN_KEY_USER_ID + "IS " + user_id;
-        }
         String selectUser = "SELECT * FROM" + USER_LOGS_TABLE + "WHERE " + USER_LOGS_FOREIGN_KEY_USER_ID + "IS " + user_id;
         return db.rawQuery(selectUser, null);
     }
