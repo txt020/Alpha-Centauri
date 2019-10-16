@@ -92,31 +92,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public Cursor getUser_ByUsername(String username, Integer user_id) {
+    public Cursor getUser_ByUsername(String username) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String selectUser;
-
-        if (user_id == null && username != null && !username.isEmpty()) {
-            selectUser = "SELECT * FROM" + USERS_TABLE + "WHERE username IS" + username;
-        }
-        else {
-            selectUser = "SELECT * FROM" + USERS_TABLE + "WHERE username IS" + username;
-        }
-
+        String selectUser = "SELECT * FROM" + USERS_TABLE + "WHERE username IS" + username;
         return db.rawQuery(selectUser, null);
     }
 
-    public Cursor getUserID_ByUsername(String username, Integer user_id) {
+    public Cursor getUserID_ByUsername(String username) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String selectUser;
-
-        if (user_id == null && username != null && !username.isEmpty()) {
-            selectUser = "SELECT user_id FROM" + USERS_TABLE + "WHERE username IS" + username;
-        }
-        else {
-            selectUser = "SELECT user_id FROM" + USERS_TABLE + "WHERE username IS" + username;
-        }
-        selectUser = "SELECT user_id FROM" + USERS_TABLE + "WHERE username IS" + username;
+        String selectUser = "SELECT user_id FROM" + USERS_TABLE + "WHERE username IS" + username;
         return db.rawQuery(selectUser, null);
     }
 
@@ -143,9 +127,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Cursor retrieveLogs(int id) {
+    public Cursor retrieveLogs(String user_usename, Integer user_id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String selectUser = "SELECT * FROM" + USER_LOGS_TABLE + "WHERE " + USER_LOGS_FOREIGN_KEY_USER_ID + "IS " + id;
+        String selectUser;
+//        no username
+        if ((user_usename.isEmpty() || user_usename == null) && user_id != null) {
+            selectUser = "SELECT * FROM" + USER_LOGS_TABLE + "WHERE " + USER_LOGS_FOREIGN_KEY_USER_ID + "IS " + user_id;
+        }
+//        no user_id
+        if ((!user_usename.isEmpty() || user_usename != null) && user_id == null) {
+            selectUser = "SELECT * FROM" + USER_LOGS_TABLE + "WHERE " + USER_LOGS_FOREIGN_KEY_USER_ID + "IS " + user_id;
+        }
+        String selectUser = "SELECT * FROM" + USER_LOGS_TABLE + "WHERE " + USER_LOGS_FOREIGN_KEY_USER_ID + "IS " + user_id;
         return db.rawQuery(selectUser, null);
     }
 
