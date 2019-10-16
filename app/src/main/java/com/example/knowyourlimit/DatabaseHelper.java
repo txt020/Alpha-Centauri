@@ -127,8 +127,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void retrieveLogs(String username) {
-
+    public Cursor retrieveLogs(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selectUser = "SELECT * FROM" + USER_LOGS_TABLE + "WHERE " + USER_LOGS_FOREIGN_KEY_USER_ID + "IS " + id;
+        return db.rawQuery(selectUser, null);
     }
 
     public void makeBackup(String username) {
