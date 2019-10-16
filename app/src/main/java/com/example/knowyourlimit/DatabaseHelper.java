@@ -86,27 +86,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean userIsInDatabase(String username, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String selectUser = "SELECT * FROM" + USERS_TABLE + "WHERE username IS" + username + "AND password IS" + password;
-        Cursor res = db.rawQuery(selectUser, null);
+        String selectUser = "SELECT * FROM " + USERS_TABLE + " WHERE username IS " + username + " AND password IS " + password;
+        Cursor result = db.rawQuery(selectUser, null);
+        /*todo fix this when you know*/
         return true;
     }
 
     public Cursor getUser_ByUsername(String username) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String selectUser = "SELECT * FROM" + USERS_TABLE + "WHERE username IS" + username;
-        return db.rawQuery(selectUser, null);
+        String selectUser_ByUsername = "SELECT * FROM " + USERS_TABLE + " WHERE username IS " + username;
+        return db.rawQuery(selectUser_ByUsername, null);
     }
 
     public Cursor getUserID_ByUsername(String username) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String selectUser = "SELECT user_id FROM" + USERS_TABLE + "WHERE username IS" + username;
-        return db.rawQuery(selectUser, null);
+        String selectUserID_ByUsername = "SELECT user_id FROM " + USERS_TABLE + " WHERE username IS " + username;
+        return db.rawQuery(selectUserID_ByUsername, null);
     }
 
-    public Cursor getUserPassword(String username, int id) {
+    public Cursor getUserPasswordByUsername(String username) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String selectUser = "SELECT password FROM" + USERS_TABLE + "WHERE username IS" + username;
-        return db.rawQuery(selectUser, null);
+        String selectUser_ByPassword = "SELECT password FROM " + USERS_TABLE + " WHERE username IS " + username;
+        return db.rawQuery(selectUser_ByPassword, null);
     }
 
 
@@ -126,14 +127,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Cursor retrieveLogs(String user_usename, Integer user_id) {
+    public Cursor retrieveLogs(int user_id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String selectUser = "SELECT * FROM" + USER_LOGS_TABLE + "WHERE " + USER_LOGS_FOREIGN_KEY_USER_ID + "IS " + user_id;
-        return db.rawQuery(selectUser, null);
+        String selectLogs = "SELECT * FROM " + USER_LOGS_TABLE + " WHERE " + USER_LOGS_FOREIGN_KEY_USER_ID + " IS " + user_id;
+        return db.rawQuery(selectLogs, null);
     }
 
-    public void makeBackup(String username) {
+    public Cursor makeBackup(int user_iD) {
+        SQLiteDatabase db = this.getWritableDatabase();
+//        returns the user logs message, logs money cost, logs category, logs timestamp
+        String selectLogs = "SELECT " +
+                USER_LOGS_COLUMN_MESSAGE + ", " +
+                USER_LOGS_COLUMN_MONEY_AMOUNT + ", " +
+                USER_LOGS_COLUMN_CATEGORY + ", " +
+                USER_LOGS_COLUMN_TIMESTAMP +
+                " FROM " + USER_LOGS_TABLE + " WHERE " + USER_LOGS_FOREIGN_KEY_USER_ID + " IS " + user_iD;
 
+        return db.rawQuery(selectLogs, null);
     }
 
 }
