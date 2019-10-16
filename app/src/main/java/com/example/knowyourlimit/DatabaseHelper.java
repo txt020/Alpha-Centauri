@@ -1,5 +1,6 @@
 package com.example.knowyourlimit;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -49,8 +50,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public void register(String username, String email, String password) {
+    public boolean insertUser(String username, String email, String password) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_USERNAME, username);
+        contentValues.put(COLUMN_EMAIL, email);
+        contentValues.put(COLUMN_PASSWORD, password);
+        long results = db.insert(TABLE_NAME, null, contentValues);
 
+        if (results == -1) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
 
@@ -75,6 +87,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void makeBackup(String username) {
 
     }
-
 
 }
