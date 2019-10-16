@@ -12,26 +12,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "KYL.db";
     private static final String USERS_TABLE = "users";
-    private static final String USERS_LOGS_TABLE = "user_log";
 
-    private static final String COLUMN_ID = "user_id";
-    private static final String COLUMN_USERNAME = "user_username";
-    private static final String COLUMN_EMAIL = "user_email";
-    private static final String COLUMN_PASSWORD = "user_password";
+    private static final String USERS_COLUMN_ID = "user_id";
+    private static final String USERS_COLUMN_USERNAME = "user_username";
+    private static final String USERS_COLUMN_EMAIL = "user_email";
+    private static final String USERS_COLUMN_PASSWORD = "user_password";
 
-
+    private static final String USER_LOGS_TABLE = "user_log";
+    private static final String USER_LOGS_COLUMN_ID = "user_log_id";
+    private static final String USER_LOGS_COLUMN_MESSAGE = "user_log_message";
+    private static final String USER_LOGS_COLUMN_TIMESTAMP = "user_log_timestamp";
+    private static final String USER_LOGS_COLUMN_MONEY_AMOUNT = "user_log_money_amount";
+//    private static final String USER_LOGS_COLUMN_
     private final static String CREATE_USERS_TABLE =
-            "CREATE TABLE " + USERS_TABLE + " (" +
+            "CREATE TABLE IF NOT EXISTS " + USERS_TABLE + " (" +
                     "user_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE," +
                     "user_username VARCHAR(255) UNIQUE," +
                     "user_email VARCHAR(255) UNIQUE," +
                     "user_password VARCHAR(255)" +
                     ");";
 
+    private final static String CREATE_USER_LOGS_TABLE =
+            "CREATE TABLE IF NOT EXISTS " + USER_LOGS_TABLE + "(" +
+                    "user_log_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE," +
+                    "user_log_message VARCHAR(255)," +
+                    "user_log_timestamp VARCHAR(255)," +
+                    "user_log_money_amount INTEGER(255)," +
+                    "user_id INTEGER," +
+                    "FOREIGN KEY (user_id) REFERENCES users(id)" +
+                    ");";
+
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        SQLiteDatabase db = getWritableDatabase();
+//
 //        SQLiteDatabase db = getWritableDatabase();
     }
 
@@ -39,6 +53,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(CREATE_USERS_TABLE);
+        sqLiteDatabase.execSQL(CREATE_USER_LOGS_TABLE);
         this.db = sqLiteDatabase;
     }
 
@@ -53,9 +68,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean insertUser(String username, String email, String password) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_USERNAME, username);
-        contentValues.put(COLUMN_EMAIL, email);
-        contentValues.put(COLUMN_PASSWORD, password);
+        contentValues.put(USERS_COLUMN_USERNAME, username);
+        contentValues.put(USERS_COLUMN_EMAIL, email);
+        contentValues.put(USERS_COLUMN_PASSWORD, password);
         long results = db.insert(USERS_TABLE, null, contentValues);
 
         if (results == -1) {
