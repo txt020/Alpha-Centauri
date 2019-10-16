@@ -28,8 +28,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     ");";
 
 
-    public DatabaseHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
+    public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        SQLiteDatabase db = getWritableDatabase();
 //        SQLiteDatabase db = getWritableDatabase();
     }
 
