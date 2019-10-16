@@ -92,19 +92,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public Cursor getUser_ByUsername(String username) {
+    public Cursor getUser_ByUsername(String username, Integer user_id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String selectUser = "SELECT * FROM" + USERS_TABLE + "WHERE username IS" + username;
+        String selectUser;
+
+        if (user_id == null && username != null && !username.isEmpty()) {
+            selectUser = "SELECT * FROM" + USERS_TABLE + "WHERE username IS" + username;
+        }
+        else {
+            selectUser = "SELECT * FROM" + USERS_TABLE + "WHERE username IS" + username;
+        }
+
         return db.rawQuery(selectUser, null);
     }
 
-    public Cursor getUserID_ByUsername(String username) {
+    public Cursor getUserID_ByUsername(String username, Integer user_id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String selectUser = "SELECT user_id FROM" + USERS_TABLE + "WHERE username IS" + username;
+        String selectUser;
+
+        if (user_id == null && username != null && !username.isEmpty()) {
+            selectUser = "SELECT user_id FROM" + USERS_TABLE + "WHERE username IS" + username;
+        }
+        else {
+            selectUser = "SELECT user_id FROM" + USERS_TABLE + "WHERE username IS" + username;
+        }
+        selectUser = "SELECT user_id FROM" + USERS_TABLE + "WHERE username IS" + username;
         return db.rawQuery(selectUser, null);
     }
 
-    public Cursor getUserPassword(String username) {
+    public Cursor getUserPassword(String username, int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String selectUser = "SELECT password FROM" + USERS_TABLE + "WHERE username IS" + username;
         return db.rawQuery(selectUser, null);
