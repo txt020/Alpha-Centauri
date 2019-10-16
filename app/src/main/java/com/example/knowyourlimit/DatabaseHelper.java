@@ -12,6 +12,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "KYL.db";
     private static final String USERS_TABLE = "users";
+    private static final String USERS_LOGS_TABLE = "user_log";
 
     private static final String COLUMN_ID = "user_id";
     private static final String COLUMN_USERNAME = "user_username";
@@ -19,7 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_PASSWORD = "user_password";
 
 
-    private final static String CREATE_TABLE =
+    private final static String CREATE_USERS_TABLE =
             "CREATE TABLE " + USERS_TABLE + " (" +
                     "user_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE," +
                     "user_username VARCHAR(255) UNIQUE," +
@@ -37,7 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL(CREATE_TABLE);
+        sqLiteDatabase.execSQL(CREATE_USERS_TABLE);
         this.db = sqLiteDatabase;
     }
 
