@@ -7,12 +7,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-
     private SQLiteDatabase db;
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "KYL.db";
-    private static final String USERS_TABLE = "users";
 
+    private static final String USERS_TABLE = "users";
     private static final String USERS_COLUMN_ID = "user_id";
     private static final String USERS_COLUMN_USERNAME = "user_username";
     private static final String USERS_COLUMN_EMAIL = "user_email";
@@ -24,9 +23,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String USER_LOGS_COLUMN_TIMESTAMP = "user_log_timestamp";
     private static final String USER_LOGS_COLUMN_MONEY_AMOUNT = "user_log_money_amount";
     private static final String USER_LOGS_COLUMN_CATEGORY = "user_log_money_category";
-    private static final String USER_LOGS_FOREIGN_KEY_USER_ID = "user_id";
+    private static final String USER_LOGS_FOREIGN_KEY_USER_ID = "user_log_user_id";
 
-    //    private static final String USER_LOGS_COLUMN_
+    /*    //    private static final String USER_LOGS_COLUMN_*/
     private final static String CREATE_USERS_TABLE =
             "CREATE TABLE IF NOT EXISTS " + USERS_TABLE + " (" +
                     USERS_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE," +
