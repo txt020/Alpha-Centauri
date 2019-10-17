@@ -23,7 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String USER_LOGS_COLUMN_TIMESTAMP = "user_log_timestamp";
     private static final String USER_LOGS_COLUMN_MONEY_AMOUNT = "user_log_money_amount";
     private static final String USER_LOGS_COLUMN_CATEGORY = "user_log_money_category";
-    private static final String USER_LOGS_FOREIGN_KEY_USER_ID = "user_log_user_id";
+    private static final String USER_LOGS_FOREIGN_KEY = "user_log_user_id";
 
     /*    //    private static final String USER_LOGS_COLUMN_*/
     private final static String CREATE_USERS_TABLE =
@@ -37,12 +37,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private final static String CREATE_USER_LOGS_TABLE =
             "CREATE TABLE IF NOT EXISTS " + USER_LOGS_TABLE + "(" +
                     USER_LOGS_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE," +
-                    USER_LOGS_COLUMN_MESSAGE + " VARCHAR(255)," +
+                    USER_LOGS_COLUMN_MESSAGE + " TEXT," +
                     USER_LOGS_COLUMN_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP," +
-                    USER_LOGS_COLUMN_MONEY_AMOUNT + " INTEGER(255)," +
+                    USER_LOGS_COLUMN_MONEY_AMOUNT + " INTEGER," +
                     USER_LOGS_COLUMN_CATEGORY + " varchar(255)," +
-                    USER_LOGS_FOREIGN_KEY_USER_ID + " INTEGER NOT NULL," +
-                    "FOREIGN KEY (user_id) REFERENCES users(id)" +
+                    USER_LOGS_FOREIGN_KEY + " INTEGER NOT NULL," +
+                    "FOREIGN KEY (" + USER_LOGS_FOREIGN_KEY +" ) REFERENCES "+  USERS_TABLE + "("+ USERS_COLUMN_ID + ")" +
                     ");";
 
 
@@ -121,7 +121,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(USER_LOGS_COLUMN_MESSAGE, message);
         contentValues.put(USER_LOGS_COLUMN_MONEY_AMOUNT, money);
         contentValues.put(USER_LOGS_COLUMN_CATEGORY, category);
-        contentValues.put(USER_LOGS_FOREIGN_KEY_USER_ID, username);
+        contentValues.put(USER_LOGS_FOREIGN_KEY, username);
         long results = db.insert(USERS_TABLE, null, contentValues);
 
         if (results == -1) {
@@ -133,7 +133,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor retrieveLogs(int user_id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String selectLogs = "SELECT * FROM " + USER_LOGS_TABLE + " WHERE " + USER_LOGS_FOREIGN_KEY_USER_ID + " IS " + user_id;
+        String selectLogs = "SELECT * FROM " + USER_LOGS_TABLE + " WHERE " + USER_LOGS_FOREIGN_KEY + " IS " + user_id;
         return db.rawQuery(selectLogs, null);
     }
 
@@ -145,7 +145,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 USER_LOGS_COLUMN_MONEY_AMOUNT + ", " +
                 USER_LOGS_COLUMN_CATEGORY + ", " +
                 USER_LOGS_COLUMN_TIMESTAMP +
-                " FROM " + USER_LOGS_TABLE + " WHERE " + USER_LOGS_FOREIGN_KEY_USER_ID + " IS " + user_iD;
+                " FROM " + USER_LOGS_TABLE + " WHERE " + USER_LOGS_FOREIGN_KEY + " IS " + user_iD;
 
         return db.rawQuery(selectLogs, null);
     }
