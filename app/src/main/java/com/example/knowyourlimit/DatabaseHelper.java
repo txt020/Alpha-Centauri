@@ -23,7 +23,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String USER_LOGS_COLUMN_TIMESTAMP = "user_log_timestamp";
     private static final String USER_LOGS_COLUMN_MONEY_AMOUNT = "user_log_money_amount";
     private static final String USER_LOGS_COLUMN_CATEGORY = "user_log_money_category";
-    private static final String USER_LOGS_FOREIGN_KEY = "user_log_user_id";
+    //    private static final String USER_LOGS_FOREIGN_KEY = "user_log_user_id";
+    private static final String USER_LOGS_FOREIGN_KEY = "user_log_user_username";
 
     /*    //    private static final String USER_LOGS_COLUMN_*/
     private final static String CREATE_USERS_TABLE =
@@ -42,7 +43,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     USER_LOGS_COLUMN_MONEY_AMOUNT + " INTEGER," +
                     USER_LOGS_COLUMN_CATEGORY + " varchar(255)," +
                     USER_LOGS_FOREIGN_KEY + " INTEGER NOT NULL," +
-                    "FOREIGN KEY (" + USER_LOGS_FOREIGN_KEY +" ) REFERENCES "+  USERS_TABLE + "("+ USERS_COLUMN_ID + ")" +
+                    "FOREIGN KEY (" + USER_LOGS_FOREIGN_KEY + " ) REFERENCES " + USERS_TABLE + "(" + USERS_COLUMN_ID + ")" +
                     ");";
 
 
@@ -131,10 +132,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Cursor retrieveLogs(int user_id) {
+    public Cursor retrieveLogs(String user_username, int user_id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String selectLogs = "SELECT * FROM " + USER_LOGS_TABLE + " WHERE " + USER_LOGS_FOREIGN_KEY + " IS " + user_id;
-        return db.rawQuery(selectLogs, null);
+        String selectLogs;
+        if (user_username.isEmpty() || user_username == null) {
+            selectLogs = "SELECT * FROM " + USER_LOGS_TABLE + " WHERE " + USER_LOGS_FOREIGN_KEY + " IS " + user_id;
+        }else {
+            selectLogs = "SELECT * FROM " + USER_LOGS_TABLE + " WHERE " + USER_LOGS_FOREIGN_KEY + " IS " + user_username;
+        }
+
+        try {
+            return db.rawQuery(selectLogs, null);
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     public Cursor makeBackup(int user_iD) {
