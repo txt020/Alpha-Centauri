@@ -132,24 +132,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Cursor retrieveLogs(String user_username, int user_id) {
+    public Cursor retrieveLogs(String user_username) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String selectLogs;
-        if (user_username.isEmpty() || user_username == null) {
-            selectLogs = "SELECT * FROM " + USER_LOGS_TABLE + " WHERE " + USER_LOGS_FOREIGN_KEY + " IS " + user_id;
-        }else {
-            selectLogs = "SELECT * FROM " + USER_LOGS_TABLE + " WHERE " + USER_LOGS_FOREIGN_KEY + " IS " + user_username;
-        }
-
-        try {
-            return db.rawQuery(selectLogs, null);
-        }
-        catch (Exception e) {
-            System.out.println(e);
-        }
+        String selectLogs = "SELECT * FROM " + USER_LOGS_TABLE + " WHERE " + USER_LOGS_FOREIGN_KEY + " IS " + user_username;
+        return db.rawQuery(selectLogs, null);
     }
 
-    public Cursor makeBackup(int user_iD) {
+    public Cursor makeBackup(String user_username) {
         SQLiteDatabase db = this.getWritableDatabase();
 //        returns the user logs message, logs money cost, logs category, logs timestamp
         String selectLogs = "SELECT " +
@@ -157,7 +146,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 USER_LOGS_COLUMN_MONEY_AMOUNT + ", " +
                 USER_LOGS_COLUMN_CATEGORY + ", " +
                 USER_LOGS_COLUMN_TIMESTAMP +
-                " FROM " + USER_LOGS_TABLE + " WHERE " + USER_LOGS_FOREIGN_KEY + " IS " + user_iD;
+                " FROM " + USER_LOGS_TABLE + " WHERE " + USER_LOGS_FOREIGN_KEY + " IS " + user_username;
 
         return db.rawQuery(selectLogs, null);
     }
