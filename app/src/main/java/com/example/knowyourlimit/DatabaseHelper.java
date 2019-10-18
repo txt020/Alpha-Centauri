@@ -162,5 +162,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return db.rawQuery(selectLogs, null);
     }
-
 }
