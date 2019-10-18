@@ -68,12 +68,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public boolean insertTheUser(String username, String email, String password) {
+    public boolean insertTheUser(String user_username, String user_email, String user_password) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(USERS_COLUMN_USERNAME, username);
-        contentValues.put(USERS_COLUMN_EMAIL, email);
-        contentValues.put(USERS_COLUMN_PASSWORD, password);
+        contentValues.put(USERS_COLUMN_USERNAME, user_username);
+        contentValues.put(USERS_COLUMN_EMAIL, user_email);
+        contentValues.put(USERS_COLUMN_PASSWORD, user_password);
         long results = db.insert(USERS_TABLE, null, contentValues);
 
         if (results == -1) {
@@ -84,13 +84,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public boolean userIsInDatabase(String username, String email, String password) {
+    public boolean userIsInDatabase(String user_username, String email, String user_password) {
         SQLiteDatabase db = this.getWritableDatabase();
         String selectUser;
-        if (username.isEmpty() && username == null) {
-            selectUser = "SELECT * FROM " + USERS_TABLE + " WHERE " + USERS_COLUMN_USERNAME + " IS " + username + " AND password IS " + password;
+        if (user_username.isEmpty() && user_username == null) {
+            selectUser = "SELECT * FROM " + USERS_TABLE + " WHERE " + USERS_COLUMN_USERNAME + " IS " + user_username + " AND password IS " + user_password;
         } else {
-            selectUser = "SELECT * FROM " + USERS_TABLE + " WHERE " + USERS_COLUMN_EMAIL + " IS " + email + " AND password IS " + password;
+            selectUser = "SELECT * FROM " + USERS_TABLE + " WHERE " + USERS_COLUMN_EMAIL + " IS " + email + " AND password IS " + user_password;
         }
 
         Cursor result = db.rawQuery(selectUser, null);
@@ -103,36 +103,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public Cursor getUserObject_ByUsername(String username) {
+    public Cursor getUserObject_ByUsername(String user_username) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String selectUser_ByUsername = "SELECT * FROM " + USERS_TABLE + " WHERE " + USERS_COLUMN_USERNAME + " IS " + username;
+        String selectUser_ByUsername = "SELECT * FROM " + USERS_TABLE + " WHERE " + USERS_COLUMN_USERNAME + " IS " + user_username;
         return db.rawQuery(selectUser_ByUsername, null);
     }
 
 
-    public Cursor getUserID_ByUsername(String username) {
+    public Cursor getUserID_ByUsername(String user_username) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String selectUserID_ByUsername = "SELECT " + USERS_COLUMN_ID + " FROM " + USERS_TABLE + " WHERE " + USERS_COLUMN_USERNAME + " IS " + username;
+        String selectUserID_ByUsername = "SELECT " + USERS_COLUMN_ID + " FROM " + USERS_TABLE + " WHERE " + USERS_COLUMN_USERNAME + " IS " + user_username;
         return db.rawQuery(selectUserID_ByUsername, null);
     }
 
 
-    public Cursor getUserPasswordByUsername(String username) {
+    public Cursor getUserPasswordByUsername(String user_username) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String selectUser_ByPassword = "SELECT password FROM " + USERS_TABLE + " WHERE username IS " + username;
+        String selectUser_ByPassword = "SELECT password FROM " + USERS_TABLE + " WHERE username IS " + user_username;
         return db.rawQuery(selectUser_ByPassword, null);
     }
 
 
-    public boolean insertLog(String username, String message, int money, String category) {
+    public boolean insertLog(String user_log_username, String user_log_message, int user_log_money, String user_log_category) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(USER_LOGS_COLUMN_MESSAGE, message);
-        contentValues.put(USER_LOGS_COLUMN_MONEY_AMOUNT, money);
-        contentValues.put(USER_LOGS_COLUMN_CATEGORY, category);
+        contentValues.put(USER_LOGS_COLUMN_MESSAGE, user_log_message);
+        contentValues.put(USER_LOGS_COLUMN_MONEY_AMOUNT, user_log_money);
+        contentValues.put(USER_LOGS_COLUMN_CATEGORY, user_log_category);
 //        contentValues.put(USER_LOGS_FOREIGN_KEY, id);
-        contentValues.put(USER_LOGS_FOREIGN_KEY, username);
-        long results = db.insert(USERS_TABLE, null, contentValues);
+        contentValues.put(USER_LOGS_FOREIGN_KEY, user_log_username);
+        long results = db.insert(USER_LOGS_TABLE, null, contentValues);
 
         if (results == -1) {
             return false;
@@ -160,5 +160,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " FROM " + USER_LOGS_TABLE + " WHERE " + USER_LOGS_FOREIGN_KEY + " IS " + user_username;
 
         return db.rawQuery(selectLogs, null);
+    }
+
+    public Cursor getLogsInCategory(String user_log_category, String user_username) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selectQuery = "SELECT * FROM " + USER_LOGS_TABLE + " WHERE " + USER_LOGS_FOREIGN_KEY + " IS " + user_username + " AND " + USER_LOGS_COLUMN_CATEGORY + " IS " + user_log_category;
+        return db.rawQuery(selectQuery, null);
     }
 }
