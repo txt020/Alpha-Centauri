@@ -16,30 +16,22 @@ public class MainActivity extends AppCompatActivity {
     private EditText email;
     private Button signup;
 
-    DatabaseHelper mydb;
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mydb = new DatabaseHelper(this);
-        mydb.insertUser("Navid", "navid@jerkoff.com", "password");
-
 
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        username = (EditText)findViewById(R.id.user);
-        password = (EditText)findViewById(R.id.passw);
+        username = (EditText) findViewById(R.id.user);
+        password = (EditText) findViewById(R.id.passw);
         email = (EditText) findViewById(R.id.Email);
-        signup = (Button)findViewById(R.id.Register);
+        signup = (Button) findViewById(R.id.Register);
 
-        signup.setOnClickListener(new View.OnClickListener(){
+        signup.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 /*write some sql code where it stores user's username, password, and email*/
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
