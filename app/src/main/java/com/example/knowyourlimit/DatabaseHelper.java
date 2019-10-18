@@ -80,6 +80,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // had to be overridden
+/*    i believe on upgrade that table is deleted and a new table made
+    because SQLITE cannot alter the table it removes and creates it again
+        so everything in that table is lost
+    should be called rarely*/
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         String dropQuery = "DROP TABLE IF EXISTS " + USERS_TABLE;
@@ -206,7 +210,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /*gets you back the log with that category from that user
-    * give me the username and i can give you every log where that user spent money on that category
+    * give me the username and which category and i can give you every log where that user spent money on that category
      */
     public Cursor getLogsByCategory(String user_log_category, String user_username) {
         SQLiteDatabase db = this.getWritableDatabase();
