@@ -6,13 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-/*all SQL is written in CAPITALIZED LETTERING
+/* all SQL is written in CAPITALIZED LETTERING
  variables are written in camelCase for java readability
  if it becomes hard to read then _ is user
  everything in user log table has user_log_ in front of the variable and everything in user table has user_ in front of it
  variables used in from java to put into sql are written in snake_case
-
-
  */
 
 
