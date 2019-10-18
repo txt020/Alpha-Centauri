@@ -105,7 +105,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getUserObject_ByUsername(String username) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String selectUser_ByUsername = "SELECT * FROM " + USERS_TABLE + " WHERE username IS " + username;
+        String selectUser_ByUsername = "SELECT * FROM " + USERS_TABLE + " WHERE " + USERS_COLUMN_USERNAME + " IS " + username;
         return db.rawQuery(selectUser_ByUsername, null);
     }
 
