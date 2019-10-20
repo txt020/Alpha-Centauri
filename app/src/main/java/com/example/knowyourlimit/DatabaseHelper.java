@@ -204,6 +204,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 USER_LOGS_COLUMN_TIMESTAMP +
                 " FROM " + USER_LOGS_TABLE + " WHERE " + USER_LOGS_FOREIGN_KEY + " IS " + user_username;
 
+//        make this later into a dump csv of all the things and give back a file instead of a object
+//        sqlite3 testDB.db .dump > testDB.sql
+
         return db.rawQuery(selectLogs, null);
     }
 
