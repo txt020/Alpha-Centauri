@@ -6,12 +6,18 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.io.File;
+
 /* all SQL is written in CAPITALIZED LETTERING
  variables are written in camelCase for java readability
  if it becomes hard to read then _ is user
  everything in user log table has user_log_ in front of the variable and everything in user table has user_ in front of it
  variables used in from java to put into sql are written in snake_case
  */
+
+/*these are documentation comments*/
+
+//    these are code comments
 
 
 
@@ -90,11 +96,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    /*acts as a registration
+/*
+    acts as a registration
     it inserts the user into the database and checks that the username and email is unique
-    if the username or email already exist in database for any other user then or at all then it will throw error*/
-//    if it returns true then it was successful in putting the user into the database
-//        if false then it was not successful in inserting the user into the database
+    if the username or email already exist in database for any other user then or at all then it will throw error
+    if it returns true then it was successful in putting the user into the database
+        if false then it was not successful in inserting the user into the database
+*/
     public boolean insertTheUser(String user_username, String user_email, String user_password) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -111,13 +119,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /*acts as login feature*/
-//    checks if the user with that username or email and password is in the database or not
-//    currently can login with either username or email and password
-//        might simplify later to just username
-//    if you want to login with username you can do userIsInDatabase("username", null, "Pa55WorD"
-//        that will let me know to use the username and not the email
-//    if you want to login with email then you can do userIsInDatabase(null, "email@AOL.com", ""PA33w00RD"
-//        that will let me know to user the email instead and of the username
+/*    checks if the user with that username or email and password is in the database or not
+    currently can login with either username or email and password
+        might simplify later to just username
+    if you want to login with username you can do userIsInDatabase("username", null, "Pa55WorD"
+        that will let me know to use the username and not the email
+    if you want to login with email then you can do userIsInDatabase(null, "email@AOL.com", ""PA33w00RD"
+        that will let me know to user the email instead and of the username*/
     public boolean userIsInDatabase(String user_username, String user_email, String user_password) {
         SQLiteDatabase db = this.getWritableDatabase();
         String selectUser;
@@ -206,6 +214,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 //        make this later into a dump csv of all the things and give back a file instead of a object
 //        sqlite3 testDB.db .dump > testDB.sql
+
+
 
         return db.rawQuery(selectLogs, null);
     }
