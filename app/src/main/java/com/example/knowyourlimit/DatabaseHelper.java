@@ -51,7 +51,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     USERS_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE," +
                     USERS_COLUMN_USERNAME + " VARCHAR(255) UNIQUE," +
                     USERS_COLUMN_EMAIL + " VARCHAR(255) UNIQUE," +
-                    USERS_COLUMN_PASSWORD + " VARCHAR(255)" +
+                    USERS_COLUMN_PASSWORD + " VARCHAR(255)," +
+                    "PRIMARY KEY( " + USERS_COLUMN_ID + " ) " +
                     ");";
 
     /*sql query to create user_logs table*/
@@ -63,6 +64,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     USER_LOGS_COLUMN_MONEY_AMOUNT + " INTEGER," +
                     USER_LOGS_COLUMN_CATEGORY + " varchar(255)," +
                     USER_LOGS_FOREIGN_KEY + " INTEGER NOT NULL," +
+                    "PRIMARY KEY( " + USER_LOGS_COLUMN_ID + " ), " +
                     "FOREIGN KEY (" + USER_LOGS_FOREIGN_KEY + " ) REFERENCES " + USERS_TABLE + "(" + USERS_COLUMN_ID + ")" +
                     ");";
 
