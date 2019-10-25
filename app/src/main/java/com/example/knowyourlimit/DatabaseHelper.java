@@ -19,6 +19,7 @@ import java.io.File;
 
 //    these are code comments
 
+//todo add constraints on the things that can be added
 
 
 public class DatabaseHelper extends SQLiteOpenHelper {
