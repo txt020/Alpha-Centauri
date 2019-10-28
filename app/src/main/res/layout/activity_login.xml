@@ -7,12 +7,18 @@
     tools:context=".LoginActivity">
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="181dp"
-        android:layout_height="97dp"
-        android:visibility="visible"
+        android:id="@+id/textView2"
+        android:layout_width="333dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="655dp"
+        android:gravity="center"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
