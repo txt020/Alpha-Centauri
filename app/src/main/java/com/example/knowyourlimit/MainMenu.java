@@ -23,24 +23,42 @@ import java.util.List;
 public class MainMenu extends AppCompatActivity {
     String cat [] = {"Food", "Transportaion", "Housing", "Miscellaneous"};
 
-    public double totalBudget, food = 40.8, transportation = 50.2, housing = 10.0,
-            miscellaneous = 33.4, initialBudget = 18767.566;
+    public double totalBudget, food, transportation, housing,
+            miscellaneous, initialBudget;
 
     float data[] = {(float) food, (float) transportation, (float) housing, (float) miscellaneous};
 
     DecimalFormat df = new DecimalFormat("#.00");
 
     private TextView budgetView;
-    private EditText username, password, email;
-    private Button signup;
+    private EditText username, password, email, initial, textFood, textTransportaion, textHousing,
+                        textMiscellaneous;
+    private Button signup, submit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setTextViews();
+        submit.setOnClickListener(new View.OnClickListener()){
+            @Override
+            public void onClick(View w){
+                initialBudget = initial
+            }
+        }
+
         displayTB();
         setupPieChart(data);
+    }
+
+    private void setTextViews() {
+        initial = (EditText)findViewById(R.id.InitialBudget);
+        textFood = (EditText)findViewById(R.id.FoodExpenses);
+        textTransportaion = (EditText)findViewById(R.id.Transportaion);
+        textHousing = (EditText) findViewById(R.id.housing);
+        textMiscellaneous = (EditText) findViewById(R.id.Miscellaneous);
+        submit = (Button) findViewById(R.id.submitButton);
     }
 
     private void setupPieChart(float[] data) {
