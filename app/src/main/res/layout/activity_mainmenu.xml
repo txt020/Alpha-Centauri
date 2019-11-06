@@ -37,7 +37,7 @@
                 android:layout_height="28dp"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:text="Expenditure Pie Chart"
+                android:text="@string/expenditure_pie_chart"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toTopOf="@+id/chart"
@@ -54,6 +54,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/Char_title" />
 
+
+            <Button
+                android:id="@+id/DropDownButton"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/edit_my_budget"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/chart" />
+
+
             <EditText
                 android:id="@+id/InitialBudget"
                 android:layout_width="wrap_content"
@@ -64,11 +78,15 @@
                 android:layout_marginRight="100dp"
                 android:ems="10"
                 android:gravity="center"
-                android:hint="Initial Budget Amount"
+                android:hint="@string/initial_budget_amount"
                 android:inputType="numberDecimal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/chart" />
+                app:layout_constraintTop_toBottomOf="@+id/DropDownButton"
+                android:visibility="gone"
+                android:autofillHints="" />
+
+
 
             <EditText
                 android:id="@+id/FoodExpenses"
@@ -80,11 +98,13 @@
                 android:layout_marginRight="100dp"
                 android:ems="10"
                 android:gravity="center"
-                android:hint="Food Expenses"
+                android:hint="@string/food_expenses"
                 android:inputType="numberDecimal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/InitialBudget" />
+                app:layout_constraintTop_toBottomOf="@+id/InitialBudget"
+                android:visibility="gone"
+                android:autofillHints="" />
 
             <EditText
                 android:id="@+id/Transportaion"
@@ -92,12 +112,14 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:gravity="center"
-                android:hint="Transportaion Expenses"
+                android:hint="@string/transportaion_expenses"
                 android:inputType="numberDecimal"
                 app:layout_constraintBottom_toTopOf="@id/housing"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/FoodExpenses" />
+                app:layout_constraintTop_toBottomOf="@+id/FoodExpenses"
+                android:visibility="gone"
+                android:autofillHints="" />
 
             <EditText
                 android:id="@+id/housing"
@@ -105,11 +127,13 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:gravity="center"
-                android:hint="Housing Expenses"
+                android:hint="@string/housing_expenses"
                 android:inputType="numberDecimal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Transportaion" />
+                app:layout_constraintTop_toBottomOf="@+id/Transportaion"
+                android:visibility="gone"
+                android:autofillHints="" />
 
             <EditText
                 android:id="@+id/Miscellaneous"
@@ -121,7 +145,8 @@
                 android:inputType="numberDecimal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/housing" />
+                app:layout_constraintTop_toBottomOf="@+id/housing"
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/submitButton"
@@ -130,7 +155,16 @@
                 android:text="Submit"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Miscellaneous" />
+                app:layout_constraintTop_toBottomOf="@+id/Miscellaneous"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Testing TextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/submitButton" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

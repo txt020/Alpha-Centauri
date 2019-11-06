@@ -2,7 +2,6 @@ package com.example.knowyourlimit;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.widget.TextView;
@@ -39,13 +38,35 @@ public class MainMenu extends AppCompatActivity {
     private EditText textTransportaion;
     private EditText textHousing;
     private EditText textMiscellaneous;
-    private Button signup, submit;
+    private Button signup, submit, DropDown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_mainmenu);
 
+        DropDown = (Button) findViewById(R.id.DropDownButton);
+        DropDown.setOnClickListener(new View.OnClickListener(){ //This is the drop down menu
+            @Override
+            public void onClick(View w){
+                if(initial.isShown() && textFood.isShown() && textTransportaion.isShown() && textHousing.isShown() && textMiscellaneous.isShown() && submit.isShown()){
+                    initial.setVisibility(View.GONE);
+                    textFood.setVisibility(View.GONE);
+                    textTransportaion.setVisibility(View.GONE);
+                    textHousing.setVisibility(View.GONE);
+                    textMiscellaneous.setVisibility(View.GONE);
+                    submit.setVisibility(View.GONE);
+                }
+                else {
+                initial.setVisibility(View.VISIBLE);
+                textFood.setVisibility(View.VISIBLE);
+                textTransportaion.setVisibility(View.VISIBLE);
+                textHousing.setVisibility(View.VISIBLE);
+                textMiscellaneous.setVisibility(View.VISIBLE);
+                submit.setVisibility(View.VISIBLE);
+                }
+            }
+        });
         setTextViews();
         submit.setOnClickListener(new View.OnClickListener(){
             @Override

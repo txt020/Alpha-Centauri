@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Know Your Limit</string>
+    <string name="expenditure_pie_chart">Expenditure Pie Chart</string>
+    <string name="edit_my_budget">Edit my budget</string>
+    <string name="initial_budget_amount">Initial Budget Amount</string>
+    <string name="food_expenses">Food Expenses</string>
+    <string name="transportaion_expenses">Transportaion Expenses</string>
+    <string name="housing_expenses">Housing Expenses</string>
 </resources>
