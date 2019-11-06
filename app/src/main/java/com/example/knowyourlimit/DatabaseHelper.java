@@ -15,9 +15,9 @@ import java.io.File;
  variables used in from java to put into sql are written in snake_case
  */
 
-/*these are documentation comments*/
+/* these are documentation comments between multiline comments*/
 
-//    these are code comments
+//    these are code comments for myself
 
 //todo add constraints on the things that can be added
 
@@ -133,9 +133,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         String selectUser;
         if (user_username.isEmpty() && user_username == null) {
-            selectUser = "SELECT * FROM " + USERS_TABLE + " WHERE " + USERS_COLUMN_USERNAME + " IS " + user_username + " AND password IS " + user_password;
+            selectUser = "SELECT * FROM " + USERS_TABLE +
+                    " WHERE " + USERS_COLUMN_USERNAME +
+                    " IS " + user_username +
+                    " AND password IS " +
+                    user_password;
         } else {
-            selectUser = "SELECT * FROM " + USERS_TABLE + " WHERE " + USERS_COLUMN_EMAIL + " IS " + user_email + " AND password IS " + user_password;
+            selectUser = "SELECT * FROM " +
+                    USERS_TABLE + " " +
+                    "WHERE " + USERS_COLUMN_EMAIL +
+                    " IS " + user_email + " " +
+                    "AND password IS " +
+                    user_password;
         }
 
         Cursor result = db.rawQuery(selectUser, null);
@@ -198,7 +207,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     * give username and get all the logs*/
     public Cursor retrieveLogs(String user_username) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String selectLogs = "SELECT * FROM " + USER_LOGS_TABLE + " WHERE " + USER_LOGS_FOREIGN_KEY + " IS " + user_username;
+        String selectLogs = "SELECT " + "*" +
+
+                " FROM " + USER_LOGS_TABLE +
+                " WHERE " + USER_LOGS_FOREIGN_KEY +
+                " IS " + user_username;
         return db.rawQuery(selectLogs, null);
     }
 
@@ -228,7 +241,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
     public Cursor getLogsByCategory(String user_log_category, String user_username) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String selectQuery = "SELECT * FROM " + USER_LOGS_TABLE + " WHERE " + USER_LOGS_FOREIGN_KEY + " IS " + user_username + " AND " + USER_LOGS_COLUMN_CATEGORY + " IS " + user_log_category;
+        String selectQuery = "SELECT" +
+                USER_LOGS_COLUMN_MESSAGE + "," +
+                USER_LOGS_COLUMN_TIMESTAMP + "," +
+                USER_LOGS_COLUMN_MONEY_AMOUNT + "," +
+                USER_LOGS_COLUMN_CATEGORY  + "," +
+                USER_LOGS_FOREIGN_KEY + "," +
+
+                " FROM " + USER_LOGS_TABLE +
+
+                " WHERE " + USER_LOGS_FOREIGN_KEY +
+
+                " IS " + user_username + " AND "  +
+
+                USER_LOGS_COLUMN_CATEGORY + " IS " + user_log_category;
         return db.rawQuery(selectQuery, null);
     }
 }
