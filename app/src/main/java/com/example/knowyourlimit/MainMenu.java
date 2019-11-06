@@ -21,7 +21,7 @@ import java.util.List;
 
 
 public class MainMenu extends AppCompatActivity {
-    String cat [] = {"Food", "Transportaion", "Housing", "Miscellaneous"};
+    String cat [] = {"Food", "Transportation", "Housing", "Miscellaneous"};
 
     public double totalBudget, food, transportation, housing,
             miscellaneous, initialBudget;
@@ -31,8 +31,14 @@ public class MainMenu extends AppCompatActivity {
     DecimalFormat df = new DecimalFormat("#.00");
 
     private TextView budgetView;
-    private EditText username, password, email, initial, textFood, textTransportaion, textHousing,
-                        textMiscellaneous;
+    private EditText username;
+    private EditText password;
+    private EditText email;
+    private EditText initial;
+    private EditText textFood;
+    private EditText textTransportaion;
+    private EditText textHousing;
+    private EditText textMiscellaneous;
     private Button signup, submit;
 
     @Override
@@ -41,15 +47,25 @@ public class MainMenu extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setTextViews();
-        submit.setOnClickListener(new View.OnClickListener()){
+        submit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View w){
-                initialBudget = initial
-            }
-        }
+                initialBudget = Double.parseDouble(initial.getText().toString());
+                food = Double.parseDouble(textFood.getText().toString());
+                transportation = Double.parseDouble(textTransportaion.getText().toString());
+                housing = Double.parseDouble(textHousing.getText().toString());
+                miscellaneous = Double.parseDouble(textMiscellaneous.getText().toString());
+                data[0]= (float) food;
+                data[1]= (float) transportation;
+                data[2]= (float) housing;
+                data[3] = (float) miscellaneous;
+                displayTB();
+                setupPieChart(data);
 
-        displayTB();
-        setupPieChart(data);
+            }
+        });
+
+
     }
 
     private void setTextViews() {
