@@ -20,36 +20,40 @@ import java.util.List;
 
 
 public class MainMenu extends AppCompatActivity {
-    String cat [] = {"Food", "Transportation", "Housing", "Miscellaneous"};
+    String cat [] = {"Food", "Transportaion", "Housing", "Miscellaneous"};
 
+    //doubles for the money info
     public double totalBudget, food, transportation, housing,
             miscellaneous, initialBudget;
 
+    //this is used for the graph
     float data[] = {(float) food, (float) transportation, (float) housing, (float) miscellaneous};
 
     DecimalFormat df = new DecimalFormat("#.00");
 
+    //Declare the boxes on the app
     private TextView budgetView;
-    private EditText username;
-    private EditText password;
-    private EditText email;
     private EditText initial;
     private EditText textFood;
     private EditText textTransportaion;
     private EditText textHousing;
     private EditText textMiscellaneous;
-    private Button signup, submit, DropDown;
+    private Button submit, DropDown;
 
+    //main method
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainmenu);
 
+        //create dropdown menu object
         DropDown = (Button) findViewById(R.id.DropDownButton);
+        //on click listener for the dropdown menu for input
         DropDown.setOnClickListener(new View.OnClickListener(){ //This is the drop down menu
             @Override
             public void onClick(View w){
                 if(initial.isShown() && textFood.isShown() && textTransportaion.isShown() && textHousing.isShown() && textMiscellaneous.isShown() && submit.isShown()){
+                    //set visibility of the input boxes to not visible
                     initial.setVisibility(View.GONE);
                     textFood.setVisibility(View.GONE);
                     textTransportaion.setVisibility(View.GONE);
@@ -58,6 +62,7 @@ public class MainMenu extends AppCompatActivity {
                     submit.setVisibility(View.GONE);
                 }
                 else {
+                //when the button is clicked hide the input boxes
                 initial.setVisibility(View.VISIBLE);
                 textFood.setVisibility(View.VISIBLE);
                 textTransportaion.setVisibility(View.VISIBLE);
@@ -67,10 +72,14 @@ public class MainMenu extends AppCompatActivity {
                 }
             }
         });
+
         setTextViews();
+        //click listener for the submit button
         submit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View w){
+                //when the button is pressed the information in the boxes gets parsed a a double then
+                    //processed into the graph
                 initialBudget = Double.parseDouble(initial.getText().toString());
                 food = Double.parseDouble(textFood.getText().toString());
                 transportation = Double.parseDouble(textTransportaion.getText().toString());
@@ -89,6 +98,7 @@ public class MainMenu extends AppCompatActivity {
 
     }
 
+    //method to initialize the text boxes
     private void setTextViews() {
         initial = (EditText)findViewById(R.id.InitialBudget);
         textFood = (EditText)findViewById(R.id.FoodExpenses);
@@ -98,6 +108,7 @@ public class MainMenu extends AppCompatActivity {
         submit = (Button) findViewById(R.id.submitButton);
     }
 
+    //method to created the pie chart
     private void setupPieChart(float[] data) {
         List<PieEntry> pieEntries = new ArrayList<>();
         for(int i = 0; i < data.length; i++){
@@ -112,9 +123,11 @@ public class MainMenu extends AppCompatActivity {
         PieChart chart = (PieChart) findViewById(R.id.chart);
         chart.setData(num);
         chart.animateY(1000);
+        chart.setContentDescription("");
         chart.invalidate();
     }
 
+    //method to display the total budget left
     private void displayTB() {
         budgetView = (TextView) findViewById(R.id.total_budget);
 
