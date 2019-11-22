@@ -20,115 +20,112 @@ import java.util.List;
 
 
 public class MainMenu extends AppCompatActivity {
-    String cat [] = {"Food", "Transportation", "Housing", "Miscellaneous"};
 
-    public double totalBudget, food, transportation, housing,
-            miscellaneous, initialBudget;
+        String cat[] = {"Food", "Transportation", "Housing", "Miscellaneous"};
 
-    float data[] = {(float) food, (float) transportation, (float) housing, (float) miscellaneous};
+        public double totalBudget, food, transportation, housing,
+                miscellaneous, initialBudget;
 
-    DecimalFormat df = new DecimalFormat("#.00");
+        float data[] = {(float) food, (float) transportation, (float) housing, (float) miscellaneous};
 
-    private TextView budgetView;
-    private EditText username;
-    private EditText password;
-    private EditText email;
-    private EditText initial;
-    private EditText textFood;
-    private EditText textTransportaion;
-    private EditText textHousing;
-    private EditText textMiscellaneous;
-    private Button signup, submit, DropDown;
+        DecimalFormat df = new DecimalFormat("#.00");
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mainmenu);
+        private TextView budgetView;
+        private EditText initial;
+        private EditText textFood;
+        private EditText textTransportaion;
+        private EditText textHousing;
+        private EditText textMiscellaneous;
+        private Button signup, submit, DropDown;
 
-        DropDown = (Button) findViewById(R.id.DropDownButton);
-        DropDown.setOnClickListener(new View.OnClickListener(){ //This is the drop down menu
-            @Override
-            public void onClick(View w){
-                if(initial.isShown() && textFood.isShown() && textTransportaion.isShown() && textHousing.isShown() && textMiscellaneous.isShown() && submit.isShown()){
-                    initial.setVisibility(View.GONE);
-                    textFood.setVisibility(View.GONE);
-                    textTransportaion.setVisibility(View.GONE);
-                    textHousing.setVisibility(View.GONE);
-                    textMiscellaneous.setVisibility(View.GONE);
-                    submit.setVisibility(View.GONE);
+        @Override
+        protected void onCreate (Bundle savedInstanceState){
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_mainmenu);
+
+            DropDown = (Button) findViewById(R.id.DropDownButton);
+            DropDown.setOnClickListener(new View.OnClickListener() { //This is the drop down menu
+                @Override
+                public void onClick(View w) {
+                    if (initial.isShown() && textFood.isShown() && textTransportaion.isShown() && textHousing.isShown() && textMiscellaneous.isShown() && submit.isShown()) {
+                        initial.setVisibility(View.GONE);
+                        textFood.setVisibility(View.GONE);
+                        textTransportaion.setVisibility(View.GONE);
+                        textHousing.setVisibility(View.GONE);
+                        textMiscellaneous.setVisibility(View.GONE);
+                        submit.setVisibility(View.GONE);
+                    } else {
+                        initial.setVisibility(View.VISIBLE);
+                        textFood.setVisibility(View.VISIBLE);
+                        textTransportaion.setVisibility(View.VISIBLE);
+                        textHousing.setVisibility(View.VISIBLE);
+                        textMiscellaneous.setVisibility(View.VISIBLE);
+                        submit.setVisibility(View.VISIBLE);
+                    }
                 }
-                else {
-                initial.setVisibility(View.VISIBLE);
-                textFood.setVisibility(View.VISIBLE);
-                textTransportaion.setVisibility(View.VISIBLE);
-                textHousing.setVisibility(View.VISIBLE);
-                textMiscellaneous.setVisibility(View.VISIBLE);
-                submit.setVisibility(View.VISIBLE);
+            });
+            setTextViews();
+            submit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View w) {
+                    initialBudget = Double.parseDouble(initial.getText().toString());
+                    food = Double.parseDouble(textFood.getText().toString());
+                    transportation = Double.parseDouble(textTransportaion.getText().toString());
+                    housing = Double.parseDouble(textHousing.getText().toString());
+                    miscellaneous = Double.parseDouble(textMiscellaneous.getText().toString());
+                    data[0] = (float) food;
+                    data[1] = (float) transportation;
+                    data[2] = (float) housing;
+                    data[3] = (float) miscellaneous;
+                    displayTB();
+                    setupPieChart(data);
+
                 }
+            });
+
+
+        }
+
+        private void setTextViews () {
+            initial = (EditText) findViewById(R.id.InitialBudget);
+            textFood = (EditText) findViewById(R.id.FoodExpenses);
+            textTransportaion = (EditText) findViewById(R.id.Transportaion);
+            textHousing = (EditText) findViewById(R.id.housing);
+            textMiscellaneous = (EditText) findViewById(R.id.Miscellaneous);
+            submit = (Button) findViewById(R.id.submitButton);
+        }
+
+        private void setupPieChart ( float[] data){
+            List<PieEntry> pieEntries = new ArrayList<>();
+            for (int i = 0; i < data.length; i++) {
+                pieEntries.add(new PieEntry(data[i], cat[i]));
             }
-        });
-        setTextViews();
-        submit.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View w){
-                initialBudget = Double.parseDouble(initial.getText().toString());
-                food = Double.parseDouble(textFood.getText().toString());
-                transportation = Double.parseDouble(textTransportaion.getText().toString());
-                housing = Double.parseDouble(textHousing.getText().toString());
-                miscellaneous = Double.parseDouble(textMiscellaneous.getText().toString());
-                data[0]= (float) food;
-                data[1]= (float) transportation;
-                data[2]= (float) housing;
-                data[3] = (float) miscellaneous;
-                displayTB();
-                setupPieChart(data);
+            PieDataSet dataSet = new PieDataSet(pieEntries, "Pie Chart");
+            dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+            PieData num = new PieData(dataSet);
 
+            // print chart
+
+            PieChart chart = (PieChart) findViewById(R.id.chart);
+            chart.setData(num);
+            chart.animateY(1000);
+            chart.invalidate();
+        }
+
+        private void displayTB () {
+            budgetView = (TextView) findViewById(R.id.total_budget);
+
+            totalBudget = initialBudget - (transportation + housing + food + miscellaneous);
+
+            if (totalBudget < 0) {
+                String totalString = "<font color='black'>Total Budget: </font>" + "<font color='red'>"
+                        + "\u0024" + df.format(totalBudget) + "</font>";
+                budgetView.setText(Html.fromHtml(totalString), TextView.BufferType.SPANNABLE);
+            } else {
+                String totalString = "<font color='black'>Total Budget: </font>" + "<font color='green'>"
+                        + "\u0024" + df.format(totalBudget) + "</font>";
+                budgetView.setText(Html.fromHtml(totalString), TextView.BufferType.SPANNABLE);
             }
-        });
-
-
-    }
-
-    private void setTextViews() {
-        initial = (EditText)findViewById(R.id.InitialBudget);
-        textFood = (EditText)findViewById(R.id.FoodExpenses);
-        textTransportaion = (EditText)findViewById(R.id.Transportaion);
-        textHousing = (EditText) findViewById(R.id.housing);
-        textMiscellaneous = (EditText) findViewById(R.id.Miscellaneous);
-        submit = (Button) findViewById(R.id.submitButton);
-    }
-
-    private void setupPieChart(float[] data) {
-        List<PieEntry> pieEntries = new ArrayList<>();
-        for(int i = 0; i < data.length; i++){
-            pieEntries.add(new PieEntry(data[i], cat[i]));
         }
-        PieDataSet dataSet = new PieDataSet(pieEntries,"Pie Chart");
-        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
-        PieData num = new PieData(dataSet);
 
-        // print chart
-
-        PieChart chart = (PieChart) findViewById(R.id.chart);
-        chart.setData(num);
-        chart.animateY(1000);
-        chart.invalidate();
-    }
-
-    private void displayTB() {
-        budgetView = (TextView) findViewById(R.id.total_budget);
-
-        totalBudget = initialBudget - (transportation + housing + food + miscellaneous);
-
-        if(totalBudget < 0){
-            String totalString = "<font color='black'>Total Budget: </font>" + "<font color='red'>"
-                    + "\u0024" + df.format(totalBudget) + "</font>";
-            budgetView.setText(Html.fromHtml(totalString), TextView.BufferType.SPANNABLE);
-        }
-        else {
-            String totalString = "<font color='black'>Total Budget: </font>" + "<font color='green'>"
-                    + "\u0024" + df.format(totalBudget) + "</font>";
-            budgetView.setText(Html.fromHtml(totalString), TextView.BufferType.SPANNABLE);
-        }
-    }
 }
