@@ -13,6 +13,7 @@
         tools:layout_editor_absoluteY="-76dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/scrollLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -55,108 +56,192 @@
                 app:layout_constraintTop_toBottomOf="@+id/Char_title" />
 
 
-            <Button
-                android:id="@+id/DropDownButton"
-                style="@style/Widget.AppCompat.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/edit_my_budget"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/chart" />
-
-
-            <EditText
-                android:id="@+id/InitialBudget"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="99dp"
-                android:layout_marginLeft="99dp"
-                android:layout_marginEnd="100dp"
-                android:layout_marginRight="100dp"
-                android:ems="10"
-                android:gravity="center"
-                android:hint="@string/initial_budget_amount"
-                android:inputType="numberDecimal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/DropDownButton"
-                android:visibility="gone"
-                android:autofillHints="" />
-
-
-
             <EditText
                 android:id="@+id/FoodExpenses"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="99dp"
-                android:layout_marginLeft="99dp"
-                android:layout_marginEnd="100dp"
-                android:layout_marginRight="100dp"
+                android:layout_width="140dp"
+                android:layout_height="43dp"
+                android:autofillHints=""
                 android:ems="10"
                 android:gravity="center"
-                android:hint="@string/food_expenses"
+                android:hint="@string/amount"
                 android:inputType="numberDecimal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/InitialBudget"
-                android:visibility="gone"
-                android:autofillHints="" />
+                android:visibility="visible"
+                app:layout_constraintBottom_toTopOf="@+id/Transportaion"
+                app:layout_constraintEnd_toStartOf="@+id/submitFood"
+                app:layout_constraintStart_toEndOf="@+id/FoodText"
+                app:layout_constraintTop_toBottomOf="@+id/chart" />
 
             <EditText
                 android:id="@+id/Transportaion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="140dp"
+                android:layout_height="43dp"
+                android:autofillHints=""
                 android:ems="10"
                 android:gravity="center"
-                android:hint="@string/transportaion_expenses"
+                android:hint="@string/amount"
                 android:inputType="numberDecimal"
-                app:layout_constraintBottom_toTopOf="@id/housing"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/FoodExpenses"
-                android:visibility="gone"
-                android:autofillHints="" />
+                android:visibility="visible"
+                app:layout_constraintBottom_toTopOf="@+id/housing"
+                app:layout_constraintEnd_toStartOf="@+id/submitTransp"
+                app:layout_constraintStart_toEndOf="@+id/TransportationText"
+                app:layout_constraintTop_toBottomOf="@+id/FoodExpenses" />
 
             <EditText
                 android:id="@+id/housing"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="140dp"
+                android:layout_height="43dp"
+                android:layout_marginEnd="48dp"
+                android:layout_marginRight="48dp"
+                android:autofillHints=""
                 android:ems="10"
                 android:gravity="center"
-                android:hint="@string/housing_expenses"
+                android:hint="@string/amount"
                 android:inputType="numberDecimal"
+                android:visibility="visible"
+                app:layout_constraintBottom_toTopOf="@+id/Miscellaneous"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Transportaion"
-                android:visibility="gone"
-                android:autofillHints="" />
+                app:layout_constraintStart_toEndOf="@+id/HousingText"
+                app:layout_constraintTop_toBottomOf="@+id/Transportaion" />
 
             <EditText
                 android:id="@+id/Miscellaneous"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="140dp"
+                android:layout_height="43dp"
                 android:ems="10"
                 android:gravity="center"
-                android:hint="Miscellaneous Expenses"
+                android:hint="@string/amount"
                 android:inputType="numberDecimal"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/submitMisc"
+                app:layout_constraintStart_toEndOf="@+id/MicellText"
+                app:layout_constraintTop_toBottomOf="@+id/housing" />
+
+            <EditText
+                android:id="@+id/FoodText"
+                android:layout_width="0dp"
+                android:layout_height="43dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:ems="10"
+                android:hint="@string/food_expense"
+                android:inputType="textPersonName"
+                app:layout_constraintBottom_toTopOf="@+id/TransportationText"
+                app:layout_constraintEnd_toStartOf="@+id/FoodExpenses"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/housing"
-                android:visibility="gone"/>
+                app:layout_constraintTop_toBottomOf="@+id/chart" />
+
+            <EditText
+                android:id="@+id/TransportationText"
+                android:layout_width="0dp"
+                android:layout_height="43dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginBottom="1dp"
+                android:ems="10"
+                android:hint="@string/transportaion_expense"
+                android:inputType="textPersonName"
+                app:layout_constraintBottom_toTopOf="@+id/HousingText"
+                app:layout_constraintEnd_toStartOf="@+id/Transportaion"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/FoodText" />
+
+            <EditText
+                android:id="@+id/HousingText"
+                android:layout_width="0dp"
+                android:layout_height="43dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:ems="10"
+                android:hint="@string/housing_expenses"
+                android:inputType="textPersonName"
+                app:layout_constraintBottom_toTopOf="@+id/MicellText"
+                app:layout_constraintEnd_toStartOf="@+id/housing"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/TransportationText" />
+
+            <EditText
+                android:id="@+id/MicellText"
+                android:layout_width="0dp"
+                android:layout_height="43dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:ems="10"
+                android:hint="@string/micellaneous_expense"
+                android:inputType="textPersonName"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/Miscellaneous"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/HousingText" />
 
             <Button
-                android:id="@+id/submitButton"
-                android:layout_width="210dp"
-                android:layout_height="50dp"
-                android:text="Submit"
+                android:id="@+id/submitFood"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="30dp"
+                android:layout_height="43dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginRight="2dp"
+                android:background="#00000000"
+                android:text=">"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toTopOf="@+id/submitTransp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Miscellaneous"
-                android:visibility="gone"/>
+                app:layout_constraintStart_toEndOf="@+id/FoodExpenses"
+                app:layout_constraintTop_toBottomOf="@+id/chart" />
+
+            <Button
+                android:id="@+id/submitTransp"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="30dp"
+                android:layout_height="43dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginRight="2dp"
+                android:background="#00000000"
+                android:text=">"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toTopOf="@+id/submitHousing"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/Transportaion"
+                app:layout_constraintTop_toBottomOf="@+id/submitFood" />
+
+            <Button
+                android:id="@+id/submitHousing"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="30dp"
+                android:layout_height="43dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginRight="2dp"
+                android:background="#00000000"
+                android:text=">"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toTopOf="@+id/submitMisc"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/housing"
+                app:layout_constraintTop_toBottomOf="@+id/submitTransp" />
+
+            <Button
+                android:id="@+id/submitMisc"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="30dp"
+                android:layout_height="43dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginRight="2dp"
+                android:background="#00000000"
+                android:text=">"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/Miscellaneous"
+                app:layout_constraintTop_toBottomOf="@+id/submitHousing" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

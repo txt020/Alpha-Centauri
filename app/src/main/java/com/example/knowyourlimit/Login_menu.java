@@ -2,17 +2,16 @@ package com.example.knowyourlimit;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.Bundle;
 import android.util.TypedValue;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-
 public class Login_menu extends AppCompatActivity{
+    private Handler mHandler = new Handler();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,12 +21,15 @@ public class Login_menu extends AppCompatActivity{
 
         something.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
         something.setText("Welcome Back!");
+
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(Login_menu.this, MainMenu.class);
+                startActivity(intent);
+            }
+        }, 2200);
     }
-
-
-
-
-
 }
 
 
