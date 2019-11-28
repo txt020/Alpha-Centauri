@@ -35,7 +35,7 @@ public class Active_login extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 /*write some sql code where it stores user's username, password, and email*/
-                Intent intent = new Intent(Active_login.this, Login_menu.class);
+                Intent intent = new Intent(Active_login.this, initialPrompt.class);
                 startActivity(intent);
             }
         });
@@ -43,7 +43,7 @@ public class Active_login extends AppCompatActivity {
         dirsign.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Intent intent2 = new Intent(Active_login.this, MainMenu.class);
+                Intent intent2 = new Intent(Active_login.this, Login_menu.class);
                 startActivity(intent2);
             }
         });

@@ -2,6 +2,8 @@ package com.example.knowyourlimit;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.widget.TextView;
@@ -21,14 +23,11 @@ public class MainMenu extends AppCompatActivity {
     String cat [] = {"Food", "Transportaion", "Housing", "Miscellaneous"};
 
     //arrayLists for budget history
-    List<Expense> foodHistory = new ArrayList<>();
-    List<Expense> transporHistory = new ArrayList<>();
-    List<Expense> housingHistory = new ArrayList<>();
-    List<Expense> miscHistory = new ArrayList<>();
+    ArrayList<Expense> budgetHistory = new ArrayList<>();
 
     //doubles for the money info
     public double totalBudget, food, transportation, housing,
-            miscellaneous, initialBudget;
+            miscellaneous, initialBudget, extraBudget;
 
     //this is used for the graph
     float data[] = {(float)food, (float)transportation, (float)housing, (float)miscellaneous};
@@ -38,8 +37,8 @@ public class MainMenu extends AppCompatActivity {
     //Declare the boxes on the app
     private TextView budgetView;
     private EditText textFood, textTransportaion, textHousing, textMiscellaneous,
-                    foodDec, transpDec, housingDec, micellDec;
-    private Button submitFood, submitTransp, submitHousing, submitMisc;
+                    foodDec, transpDec, housingDec, micellDec, amountAddBudget, textBudget;
+    private Button submitFood, submitTransp, submitHousing, submitMisc, submitBudget, viewHistory;
     private ConstraintLayout constraintLayout;
 
     //main method
@@ -47,6 +46,11 @@ public class MainMenu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainmenu);
+
+        Bundle b = getIntent().getExtras();
+        initialBudget = b.getDouble("Initial");
+        budgetHistory.add(new Expense("Budget Addition", "Initial Budget", initialBudget));
+        displayTB();
 
         //create scroll layout
         constraintLayout = (ConstraintLayout)findViewById(R.id.scrollLayout);
@@ -59,7 +63,8 @@ public class MainMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!isEmpty(textFood) && !isEmpty(foodDec)){
-                    foodHistory.add(new Expense("Food", editTextString(textFood), editTextDouble(foodDec)));
+                    budgetHistory.add(new Expense("Food",
+                            editTextString(textFood), editTextDouble(foodDec)));
                     food += editTextDouble(foodDec);
                     data[0] = (float) food;
                     textFood.setText("");
@@ -69,13 +74,14 @@ public class MainMenu extends AppCompatActivity {
                 }
             }
         });
+
         submitTransp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!isEmpty(textTransportaion) && !isEmpty(transpDec)){
-                    transporHistory.add(new Expense("Transportation",
+                    budgetHistory.add(new Expense("Transportation",
                             editTextString(textTransportaion), editTextDouble(transpDec)));
-                    transportation += editTextDouble(foodDec);
+                    transportation += editTextDouble(transpDec);
                     data[1] = (float) transportation;
                     textTransportaion.setText("");
                     transpDec.setText("");
@@ -84,11 +90,12 @@ public class MainMenu extends AppCompatActivity {
                 }
             }
         });
+
         submitHousing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!isEmpty(textHousing) && !isEmpty(housingDec)){
-                    housingHistory.add(new Expense("Housing",
+                    budgetHistory.add(new Expense("Housing",
                             editTextString(textHousing), editTextDouble(housingDec)));
                     housing += editTextDouble(housingDec);
                     data[2] = (float) housing;
@@ -99,11 +106,12 @@ public class MainMenu extends AppCompatActivity {
                 }
             }
         });
+
         submitMisc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!isEmpty(textMiscellaneous) && !isEmpty(micellDec)){
-                    miscHistory.add(new Expense("Housing",
+                    budgetHistory.add(new Expense("Miscellaneous",
                             editTextString(textMiscellaneous), editTextDouble(micellDec)));
                     miscellaneous += editTextDouble(micellDec);
                     data[3] = (float) miscellaneous;
@@ -112,6 +120,30 @@ public class MainMenu extends AppCompatActivity {
                     displayTB();
                     setupPieChart(data);
                 }
+            }
+        });
+
+        submitBudget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!isEmpty(textBudget) && !isEmpty(amountAddBudget)){
+                    budgetHistory.add(new Expense("Budget Addition",
+                            editTextString(textBudget), editTextDouble(amountAddBudget)));
+                    extraBudget += editTextDouble(amountAddBudget);
+                    textBudget.setText("");
+                    amountAddBudget.setText("");
+                    displayTB();
+                    setupPieChart(data);
+                }
+            }
+        });
+
+        viewHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainMenu.this, ShowHistory.class);
+                intent.putExtra("budgetHistory", budgetHistory);
+                startActivity(intent);
             }
         });
     }
@@ -123,18 +155,23 @@ public class MainMenu extends AppCompatActivity {
         textTransportaion = (EditText)findViewById(R.id.TransportationText);
         textHousing = (EditText) findViewById(R.id.HousingText);
         textMiscellaneous = (EditText) findViewById(R.id.MicellText);
+        textBudget = findViewById(R.id.TextBudget);
 
         //amount
         foodDec = (EditText) findViewById(R.id.FoodExpenses);
         transpDec = (EditText) findViewById(R.id.Transportaion);
         housingDec = (EditText) findViewById(R.id.housing);
         micellDec = (EditText) findViewById(R.id.Miscellaneous);
+        amountAddBudget = (EditText)findViewById(R.id.AddBudget);
+
 
         //submit buttons
         submitFood = findViewById(R.id.submitFood);
         submitTransp = findViewById(R.id.submitTransp);
         submitHousing = findViewById(R.id.submitHousing);
         submitMisc = findViewById(R.id.submitMisc);
+        submitBudget = findViewById(R.id.submitBudget);
+        viewHistory = findViewById(R.id.HistoryButton);
     }
 
     //method to created the pie chart
@@ -159,7 +196,7 @@ public class MainMenu extends AppCompatActivity {
     //method to display the total budget left
     private void displayTB() {
         budgetView = (TextView) findViewById(R.id.total_budget);
-        totalBudget = addTotalBudget(initialBudget, transportation, housing, food, miscellaneous);
+        totalBudget = addTotalBudget(initialBudget, transportation, housing, food, miscellaneous, extraBudget);
 
         if(totalBudget < 0){
             String totalString = "<font color='black'>Total Budget: </font>" + "<font color='red'>"
@@ -193,7 +230,7 @@ public class MainMenu extends AppCompatActivity {
 
     //method to calculate total budget
     public static double addTotalBudget(double initialBudget, double transportation, double housing,
-                                  double food, double miscellaneous){
-        return initialBudget - (transportation + housing + food + miscellaneous);
+                                  double food, double miscellaneous, double extraBudget){
+        return initialBudget + extraBudget - (transportation + housing + food + miscellaneous);
     }
 }
