@@ -20,6 +20,7 @@ import java.util.List;
 
 
 public class MainMenu extends AppCompatActivity {
+// Hello there this is a demo stuff
     String cat [] = {"Food", "Transportaion", "Housing", "Miscellaneous"};
 
     //arrayLists for budget history
