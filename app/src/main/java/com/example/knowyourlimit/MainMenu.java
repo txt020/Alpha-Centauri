@@ -20,11 +20,14 @@ import java.util.List;
 
 
 public class MainMenu extends AppCompatActivity {
-// Hello there this is a demo stuff
+    // Hello there this is a demo stuff
     String cat [] = {"Food", "Transportaion", "Housing", "Miscellaneous"};
 
     //arrayLists for budget history
     ArrayList<Expense> budgetHistory = new ArrayList<>();
+
+    public boolean firstTime;
+    public int password;
 
     //doubles for the money info
     public double totalBudget, food, transportation, housing,
@@ -38,7 +41,7 @@ public class MainMenu extends AppCompatActivity {
     //Declare the boxes on the app
     private TextView budgetView;
     private EditText textFood, textTransportaion, textHousing, textMiscellaneous,
-                    foodDec, transpDec, housingDec, micellDec, amountAddBudget, textBudget;
+            foodDec, transpDec, housingDec, micellDec, amountAddBudget, textBudget;
     private Button submitFood, submitTransp, submitHousing, submitMisc, submitBudget, viewHistory;
     private ConstraintLayout constraintLayout;
 
@@ -48,9 +51,13 @@ public class MainMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainmenu);
 
-        Bundle b = getIntent().getExtras();
-        initialBudget = b.getDouble("Initial");
-        budgetHistory.add(new Expense("Budget Addition", "Initial Budget", initialBudget));
+        if(firstTime){
+            Bundle b = getIntent().getExtras();
+            if(b != null) {
+                initialBudget = b.getDouble("Initial");
+                budgetHistory.add(new Expense("Budget Addition", "Initial Budget", initialBudget));
+            }
+        }
         displayTB();
 
         //create scroll layout
@@ -215,7 +222,6 @@ public class MainMenu extends AppCompatActivity {
     private boolean isEmpty(EditText e) {
         if (e.getText().toString().trim().length() > 0)
             return false;
-
         return true;
     }
 
@@ -231,7 +237,7 @@ public class MainMenu extends AppCompatActivity {
 
     //method to calculate total budget
     public static double addTotalBudget(double initialBudget, double transportation, double housing,
-                                  double food, double miscellaneous, double extraBudget){
+                                        double food, double miscellaneous, double extraBudget){
         return initialBudget + extraBudget - (transportation + housing + food + miscellaneous);
     }
 }

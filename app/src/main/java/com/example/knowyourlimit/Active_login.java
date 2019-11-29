@@ -20,10 +20,16 @@ public class Active_login extends AppCompatActivity {
     private Button signup;
     private Button dirsign;
 
+    private boolean firstTime = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_login);
+
+        if(!firstTime){
+
+        }
 
         username = (EditText)findViewById(R.id.user);
         password = (EditText)findViewById(R.id.passw);
@@ -35,8 +41,11 @@ public class Active_login extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 /*write some sql code where it stores user's username, password, and email*/
-                Intent intent = new Intent(Active_login.this, initialPrompt.class);
-                startActivity(intent);
+                if(!isEmpty(password) && password.getText().toString().trim().length() == 4) {
+                    Intent intent = new Intent(Active_login.this, initialPrompt.class);
+
+                    startActivity(intent);
+                }
             }
         });
 
@@ -47,7 +56,13 @@ public class Active_login extends AppCompatActivity {
                 startActivity(intent2);
             }
         });
+    }
 
+    //method to check if editText is empty
+    private boolean isEmpty(EditText e) {
+        if (e.getText().toString().trim().length() > 0)
+            return false;
+        return true;
     }
 }
 
