@@ -53,7 +53,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Char_title" />
+                app:layout_constraintTop_toBottomOf="@+id/Char_title" >
+
+            </com.github.mikephil.charting.charts.PieChart>
 
 
             <EditText
@@ -112,10 +114,22 @@
                 android:hint="@string/amount"
                 android:inputType="numberDecimal"
                 android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/submitMisc"
                 app:layout_constraintStart_toEndOf="@+id/MicellText"
                 app:layout_constraintTop_toBottomOf="@+id/housing" />
+
+            <EditText
+                android:id="@+id/AddBudget"
+                android:layout_width="140dp"
+                android:layout_height="43dp"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="@string/amount"
+                android:inputType="numberDecimal"
+                android:visibility="visible"
+                app:layout_constraintEnd_toStartOf="@+id/submitBudget"
+                app:layout_constraintStart_toEndOf="@+id/TextBudget"
+                app:layout_constraintTop_toBottomOf="@+id/Miscellaneous" />
 
             <EditText
                 android:id="@+id/FoodText"
@@ -169,10 +183,22 @@
                 android:ems="10"
                 android:hint="@string/micellaneous_expense"
                 android:inputType="textPersonName"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/Miscellaneous"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/HousingText" />
+
+            <EditText
+                android:id="@+id/TextBudget"
+                android:layout_width="0dp"
+                android:layout_height="43dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:ems="10"
+                android:hint="Budget Addition"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toStartOf="@+id/Miscellaneous"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/MicellText" />
 
             <Button
                 android:id="@+id/submitFood"
@@ -238,10 +264,40 @@
                 android:background="#00000000"
                 android:text=">"
                 android:textSize="30sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/Miscellaneous"
                 app:layout_constraintTop_toBottomOf="@+id/submitHousing" />
+
+            <Button
+                android:id="@+id/submitBudget"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="30dp"
+                android:layout_height="43dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginRight="2dp"
+                android:background="#00000000"
+                android:text=">"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/AddBudget"
+                app:layout_constraintTop_toBottomOf="@+id/submitMisc" />
+
+            <Button
+                android:id="@+id/HistoryButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="162dp"
+                android:layout_marginLeft="162dp"
+                android:layout_marginEnd="162dp"
+                android:layout_marginRight="162dp"
+                android:text="View History"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/TextBudget" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
