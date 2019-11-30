@@ -79,9 +79,14 @@ public class MainMenu extends AppCompatActivity {
             totals[5] = pass.getFloat("initial", 0);
             totals[6] = pass.getFloat("extra", 0);
             history = new HistoryString(pass.getString("history", ""));
+            data[0] = (float)totals[1];
+            data[1] = (float)totals[2];
+            data[2] = (float)totals[3];
+            data[3] = (float)totals[4];
         }
 
         displayTB();
+        setupPieChart(data);
 
         //create scroll layout
         constraintLayout = (ConstraintLayout)findViewById(R.id.scrollLayout);
