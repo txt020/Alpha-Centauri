@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Html;
 import android.widget.TextView;
@@ -26,15 +27,22 @@ public class MainMenu extends AppCompatActivity {
     //arrayLists for budget history
     ArrayList<Expense> budgetHistory = new ArrayList<>();
 
+
+    HistoryString history = new HistoryString("");
+
     public boolean firstTime;
     public int password;
 
-    //doubles for the money info
+    //array to hold totals (0 = totalBudget, 1 = food, 2 = transp 3 = housing 4 = miscellaneous
+    //5 = initialBudget 6 = extraBudget
+    public double totals[] = new double[7];
+
+    //doubles for the money info ** not used ***
     public double totalBudget, food, transportation, housing,
             miscellaneous, initialBudget, extraBudget;
 
     //this is used for the graph
-    float data[] = {(float)food, (float)transportation, (float)housing, (float)miscellaneous};
+    float data[] = {(float)totals[1], (float)totals[2], (float)totals[3], (float)totals[4]};
 
     DecimalFormat df = new DecimalFormat("#.00");
 
@@ -51,13 +59,28 @@ public class MainMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainmenu);
 
-        if(firstTime){
+        final SharedPreferences pass = getApplicationContext().getSharedPreferences("savePassBool", 0);
+        final SharedPreferences.Editor editor = pass.edit();
+
+        if(pass.getBoolean("firstTime", true)){
+            budgetHistory = (ArrayList<Expense>) getIntent().getSerializableExtra("budgetHistory");
+            editor.putBoolean("firstTime", false);
             Bundle b = getIntent().getExtras();
-            if(b != null) {
-                initialBudget = b.getDouble("Initial");
-                budgetHistory.add(new Expense("Budget Addition", "Initial Budget", initialBudget));
-            }
+            totals[5] = b.getDouble("Initial");
+            editor.putFloat("initial", (float)b.getDouble("Initial"));
+            editor.apply();
+            history.addHistory(new Expense("Budget Addition", "Initial Budget", totals[5]));
+        } else {
+            totals[0] = pass.getFloat("total", 0);
+            totals[1] = pass.getFloat("food", 0);
+            totals[2] = pass.getFloat("transp", 0);
+            totals[3] = pass.getFloat("housing", 0);
+            totals[4] = pass.getFloat("misc", 0);
+            totals[5] = pass.getFloat("initial", 0);
+            totals[6] = pass.getFloat("extra", 0);
+            history = new HistoryString(pass.getString("history", ""));
         }
+
         displayTB();
 
         //create scroll layout
@@ -71,12 +94,17 @@ public class MainMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!isEmpty(textFood) && !isEmpty(foodDec)){
-                    budgetHistory.add(new Expense("Food",
+                    history.addHistory(new Expense("Food",
                             editTextString(textFood), editTextDouble(foodDec)));
-                    food += editTextDouble(foodDec);
-                    data[0] = (float) food;
+//                    budgetHistory.add(new Expense("Food",
+//                            editTextString(textFood), editTextDouble(foodDec)));
+                    totals[1] += editTextDouble(foodDec);
+                    data[0] = (float) totals[1];
                     textFood.setText("");
                     foodDec.setText("");
+                    editor.putFloat("food", (float)totals[1]);
+                    editor.putString("history", history.getHistory());
+                    editor.apply();
                     displayTB();
                     setupPieChart(data);
                 }
@@ -87,12 +115,17 @@ public class MainMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!isEmpty(textTransportaion) && !isEmpty(transpDec)){
-                    budgetHistory.add(new Expense("Transportation",
+                    history.addHistory(new Expense("Transportation",
                             editTextString(textTransportaion), editTextDouble(transpDec)));
-                    transportation += editTextDouble(transpDec);
-                    data[1] = (float) transportation;
+//                    budgetHistory.add(new Expense("Transportation",
+//                            editTextString(textTransportaion), editTextDouble(transpDec)));
+                    totals[2] += editTextDouble(transpDec);
+                    data[1] = (float) totals[2];
                     textTransportaion.setText("");
                     transpDec.setText("");
+                    editor.putFloat("transp", (float)totals[2]);
+                    editor.putString("history", history.getHistory());
+                    editor.apply();
                     displayTB();
                     setupPieChart(data);
                 }
@@ -103,12 +136,17 @@ public class MainMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!isEmpty(textHousing) && !isEmpty(housingDec)){
-                    budgetHistory.add(new Expense("Housing",
+                    history.addHistory(new Expense("Housing",
                             editTextString(textHousing), editTextDouble(housingDec)));
-                    housing += editTextDouble(housingDec);
-                    data[2] = (float) housing;
+//                    budgetHistory.add(new Expense("Housing",
+//                            editTextString(textHousing), editTextDouble(housingDec)));
+                    totals[3] += editTextDouble(housingDec);
+                    data[2] = (float) totals[3];
                     textHousing.setText("");
                     housingDec.setText("");
+                    editor.putFloat("housing", (float)totals[3]);
+                    editor.putString("history", history.getHistory());
+                    editor.apply();
                     displayTB();
                     setupPieChart(data);
                 }
@@ -119,12 +157,17 @@ public class MainMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!isEmpty(textMiscellaneous) && !isEmpty(micellDec)){
-                    budgetHistory.add(new Expense("Miscellaneous",
+                    history.addHistory(new Expense("Miscellaneous",
                             editTextString(textMiscellaneous), editTextDouble(micellDec)));
-                    miscellaneous += editTextDouble(micellDec);
-                    data[3] = (float) miscellaneous;
+//                    budgetHistory.add(new Expense("Miscellaneous",
+//                            editTextString(textMiscellaneous), editTextDouble(micellDec)));
+                    totals[4] += editTextDouble(micellDec);
+                    data[3] = (float) totals[4];
                     textMiscellaneous.setText("");
                     micellDec.setText("");
+                    editor.putFloat("misc", (float)totals[4]);
+                    editor.putString("history", history.getHistory());
+                    editor.apply();
                     displayTB();
                     setupPieChart(data);
                 }
@@ -135,11 +178,16 @@ public class MainMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!isEmpty(textBudget) && !isEmpty(amountAddBudget)){
+                    history.addHistory(new Expense("Budget Addition",
+                            editTextString(textBudget), editTextDouble(amountAddBudget)));
                     budgetHistory.add(new Expense("Budget Addition",
                             editTextString(textBudget), editTextDouble(amountAddBudget)));
-                    extraBudget += editTextDouble(amountAddBudget);
+                    totals[6] += editTextDouble(amountAddBudget);
                     textBudget.setText("");
                     amountAddBudget.setText("");
+                    editor.putFloat("extra", (float)totals[6]);
+                    editor.putString("history", history.getHistory());
+                    editor.apply();
                     displayTB();
                     setupPieChart(data);
                 }
@@ -151,6 +199,7 @@ public class MainMenu extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainMenu.this, ShowHistory.class);
                 intent.putExtra("budgetHistory", budgetHistory);
+                intent.putExtra("history", history.getHistory());
                 startActivity(intent);
             }
         });
@@ -168,7 +217,7 @@ public class MainMenu extends AppCompatActivity {
         //amount
         foodDec = (EditText) findViewById(R.id.FoodExpenses);
         transpDec = (EditText) findViewById(R.id.Transportaion);
-        housingDec = (EditText) findViewById(R.id.housing);
+        housingDec = (EditText) findViewById(R.id.Housing);
         micellDec = (EditText) findViewById(R.id.Miscellaneous);
         amountAddBudget = (EditText)findViewById(R.id.AddBudget);
 
@@ -203,17 +252,22 @@ public class MainMenu extends AppCompatActivity {
 
     //method to display the total budget left
     private void displayTB() {
-        budgetView = (TextView) findViewById(R.id.total_budget);
-        totalBudget = addTotalBudget(initialBudget, transportation, housing, food, miscellaneous, extraBudget);
+        SharedPreferences pass = getApplicationContext().getSharedPreferences("savePassBool", 0);
+        SharedPreferences.Editor editor = pass.edit();
 
-        if(totalBudget < 0){
+        budgetView = (TextView) findViewById(R.id.total_budget);
+        totals[0] = addTotalBudget(totals[5], totals[2], totals[3], totals[1], totals[4], totals[6]);
+        editor.putFloat("total", (float)totals[0]);
+        editor.apply();
+
+        if(totals[0] < 0){
             String totalString = "<font color='black'>Total Budget: </font>" + "<font color='red'>"
-                    + "\u0024" + df.format(totalBudget) + "</font>";
+                    + "\u0024" + df.format(totals[0]) + "</font>";
             budgetView.setText(Html.fromHtml(totalString), TextView.BufferType.SPANNABLE);
         }
         else {
             String totalString = "<font color='black'>Total Budget: </font>" + "<font color='green'>"
-                    + "\u0024" + df.format(totalBudget) + "</font>";
+                    + "\u0024" + df.format(totals[0]) + "</font>";
             budgetView.setText(Html.fromHtml(totalString), TextView.BufferType.SPANNABLE);
         }
     }

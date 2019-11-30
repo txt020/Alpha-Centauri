@@ -3,6 +3,7 @@ package com.example.knowyourlimit;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -27,35 +28,36 @@ public class Active_login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_login);
 
-        if(!firstTime){
+        final SharedPreferences pass = getApplicationContext().getSharedPreferences("savePassBool", 0);
 
-        }
+        final Intent intent;
 
-        username = (EditText)findViewById(R.id.user);
-        password = (EditText)findViewById(R.id.passw);
-        email = (EditText) findViewById(R.id.Email);
-        signup = (Button)findViewById(R.id.Register);
-        dirsign = (Button)findViewById(R.id.dirSignIn);
+        if(!pass.getBoolean("firstTime", true)){
+            intent = new Intent(Active_login.this, PasswordLogin.class);
+            startActivity(intent);
+            finish();
+        } else {
+            intent = new Intent(Active_login.this, initialPrompt.class);
 
-        signup.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                /*write some sql code where it stores user's username, password, and email*/
-                if(!isEmpty(password) && password.getText().toString().trim().length() == 4) {
-                    Intent intent = new Intent(Active_login.this, initialPrompt.class);
+            username = (EditText) findViewById(R.id.user);
+            password = (EditText) findViewById(R.id.passw);
+            email = (EditText) findViewById(R.id.Email);
+            signup = (Button) findViewById(R.id.Register);
+            dirsign = (Button) findViewById(R.id.dirSignIn);
 
-                    startActivity(intent);
+            signup.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!isEmpty(password) && password.getText().toString().trim().length() == 4) {
+                        SharedPreferences.Editor editor = pass.edit();
+                        editor.putString("password", password.getText().toString());
+                        editor.apply();
+                        startActivity(intent);
+                        finish();
+                    }
                 }
-            }
-        });
-
-        dirsign.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Intent intent2 = new Intent(Active_login.this, Login_menu.class);
-                startActivity(intent2);
-            }
-        });
+            });
+        }
     }
 
     //method to check if editText is empty

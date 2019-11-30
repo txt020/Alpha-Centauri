@@ -1,5 +1,17 @@
 package com.example.knowyourlimit;
 
 public class Password {
-    public boolean firstTime;
+    private String password;
+
+    public Password (String password){
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password){
+        this.password = password;
+    }
 }
