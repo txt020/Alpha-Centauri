@@ -1,11 +1,9 @@
 package com.example.knowyourlimit;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Handler;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,9 +17,9 @@ public class PasswordLogin extends AppCompatActivity {
         setContentView(R.layout.activity_password_enter);
 
         final SharedPreferences pass = getApplicationContext().getSharedPreferences("savePassBool", 0);
-
         final EditText passcode = findViewById(R.id.pass);
-        Button cont = findViewById(R.id.cont);
+        final TextView error = findViewById(R.id.inputPassError);
+        final Button cont = findViewById(R.id.cont);
 
         cont.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -29,6 +27,10 @@ public class PasswordLogin extends AppCompatActivity {
                 if(passcode.getText().toString().equals(pass.getString("password", ""))){
                     Intent intent2 = new Intent(PasswordLogin.this, Login_menu.class);
                     startActivity(intent2);
+                }
+                else {
+                    error.setTextColor(Color.RED);
+                    error.setText("Password incorrect");
                 }
             }
         });

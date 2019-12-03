@@ -1,27 +1,20 @@
 package com.example.knowyourlimit;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 
 public class Active_login extends AppCompatActivity {
-
-    private Handler mHandler = new Handler();
-
-    private EditText username;
     private EditText password;
-    private EditText email;
     private Button signup;
-    private Button dirsign;
-
-    private boolean firstTime = true;
+    private TextView error;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +32,9 @@ public class Active_login extends AppCompatActivity {
         } else {
             intent = new Intent(Active_login.this, initialPrompt.class);
 
-            username = (EditText) findViewById(R.id.user);
             password = (EditText) findViewById(R.id.passw);
-            email = (EditText) findViewById(R.id.Email);
             signup = (Button) findViewById(R.id.Register);
-            dirsign = (Button) findViewById(R.id.dirSignIn);
+            error = (TextView)findViewById(R.id.passError);
 
             signup.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -54,6 +45,10 @@ public class Active_login extends AppCompatActivity {
                         editor.apply();
                         startActivity(intent);
                         finish();
+                    }
+                    else {
+                        error.setTextColor(Color.RED);
+                        error.setText("Password needs to be 4 numbers");
                     }
                 }
             });

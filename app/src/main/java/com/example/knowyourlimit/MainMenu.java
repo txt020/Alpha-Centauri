@@ -1,8 +1,8 @@
 package com.example.knowyourlimit;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -21,25 +21,17 @@ import java.util.List;
 
 
 public class MainMenu extends AppCompatActivity {
-    // Hello there this is a demo stuff
     String cat [] = {"Food", "Transportaion", "Housing", "Miscellaneous"};
 
-    //arrayLists for budget history
+    //arrayLists for budget history **not used**
     ArrayList<Expense> budgetHistory = new ArrayList<>();
 
-
+    //String for the history
     HistoryString history = new HistoryString("");
-
-    public boolean firstTime;
-    public int password;
 
     //array to hold totals (0 = totalBudget, 1 = food, 2 = transp 3 = housing 4 = miscellaneous
     //5 = initialBudget 6 = extraBudget
     public double totals[] = new double[7];
-
-    //doubles for the money info ** not used ***
-    public double totalBudget, food, transportation, housing,
-            miscellaneous, initialBudget, extraBudget;
 
     //this is used for the graph
     float data[] = {(float)totals[1], (float)totals[2], (float)totals[3], (float)totals[4]};
@@ -50,8 +42,8 @@ public class MainMenu extends AppCompatActivity {
     private TextView budgetView;
     private EditText textFood, textTransportaion, textHousing, textMiscellaneous,
             foodDec, transpDec, housingDec, micellDec, amountAddBudget, textBudget;
-    private Button submitFood, submitTransp, submitHousing, submitMisc, submitBudget, viewHistory;
-    private ConstraintLayout constraintLayout;
+    private Button submitFood, submitTransp, submitHousing, submitMisc, submitBudget, viewHistory,
+                    resetButton;
 
     //main method
     @Override
@@ -61,35 +53,9 @@ public class MainMenu extends AppCompatActivity {
 
         final SharedPreferences pass = getApplicationContext().getSharedPreferences("savePassBool", 0);
         final SharedPreferences.Editor editor = pass.edit();
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        if(pass.getBoolean("firstTime", true)){
-            budgetHistory = (ArrayList<Expense>) getIntent().getSerializableExtra("budgetHistory");
-            editor.putBoolean("firstTime", false);
-            Bundle b = getIntent().getExtras();
-            totals[5] = b.getDouble("Initial");
-            editor.putFloat("initial", (float)b.getDouble("Initial"));
-            editor.apply();
-            history.addHistory(new Expense("Budget Addition", "Initial Budget", totals[5]));
-        } else {
-            totals[0] = pass.getFloat("total", 0);
-            totals[1] = pass.getFloat("food", 0);
-            totals[2] = pass.getFloat("transp", 0);
-            totals[3] = pass.getFloat("housing", 0);
-            totals[4] = pass.getFloat("misc", 0);
-            totals[5] = pass.getFloat("initial", 0);
-            totals[6] = pass.getFloat("extra", 0);
-            history = new HistoryString(pass.getString("history", ""));
-            data[0] = (float)totals[1];
-            data[1] = (float)totals[2];
-            data[2] = (float)totals[3];
-            data[3] = (float)totals[4];
-        }
-
-        displayTB();
-        setupPieChart(data);
-
-        //create scroll layout
-        constraintLayout = (ConstraintLayout)findViewById(R.id.scrollLayout);
+        initialSetup(pass, editor);
 
         //initialize up text views and buttons
         setTextViewsAndButtons();
@@ -208,6 +174,82 @@ public class MainMenu extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        resetButton.setOnClickListener(new View.OnClickListener() {
+
+            SharedPreferences.Editor editor = pass.edit();
+            @Override
+            public void onClick(View v) {
+                builder.setCancelable(true);
+                builder.setTitle("Reset Data");
+                builder.setMessage("Are you sure?");
+
+                builder.setPositiveButton("Confirm",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                reset(pass, editor);
+                                Intent intent = new Intent(MainMenu.this, initialPrompt.class);
+                                startActivity(intent);
+                            }
+                        });
+                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
+    }
+
+    private void reset(SharedPreferences pass, SharedPreferences.Editor editor) {
+        editor.putFloat("food", 0);
+        editor.putFloat("total", 0);
+        editor.putFloat("transp", 0);
+        editor.putFloat("housing", 0);
+        editor.putFloat("misc", 0);
+        editor.putFloat("initial", 0);
+        editor.putFloat("extra", 0);
+        editor.putBoolean("firstTime", true);
+        editor.putString("history", new HistoryString("").getHistory());
+        editor.apply();
+        for(int i = 0; i < totals.length; i++){
+            totals[i] = 0;
+        }
+        for(int i = 0; i < data.length; i++){
+            data[i] = 0;
+        }
+    }
+
+    private void initialSetup(SharedPreferences pass, SharedPreferences.Editor editor) {
+        if(pass.getBoolean("firstTime", true)){
+            budgetHistory = (ArrayList<Expense>) getIntent().getSerializableExtra("budgetHistory");
+            editor.putBoolean("firstTime", false);
+            Bundle b = getIntent().getExtras();
+            totals[5] = b.getDouble("Initial");
+            editor.putFloat("initial", (float)b.getDouble("Initial"));
+            editor.apply();
+            history.addHistory(new Expense("Budget Addition", "Initial Budget", totals[5]));
+        } else {
+            totals[0] = pass.getFloat("total", 0);
+            totals[1] = pass.getFloat("food", 0);
+            totals[2] = pass.getFloat("transp", 0);
+            totals[3] = pass.getFloat("housing", 0);
+            totals[4] = pass.getFloat("misc", 0);
+            totals[5] = pass.getFloat("initial", 0);
+            totals[6] = pass.getFloat("extra", 0);
+            history = new HistoryString(pass.getString("history", ""));
+            data[0] = (float)totals[1];
+            data[1] = (float)totals[2];
+            data[2] = (float)totals[3];
+            data[3] = (float)totals[4];
+        }
+        displayTB();
+        setupPieChart(data);
     }
 
     //method to initialize the text boxes
@@ -234,6 +276,7 @@ public class MainMenu extends AppCompatActivity {
         submitMisc = findViewById(R.id.submitMisc);
         submitBudget = findViewById(R.id.submitBudget);
         viewHistory = findViewById(R.id.HistoryButton);
+        resetButton = findViewById(R.id.resetButton);
     }
 
     //method to created the pie chart
