@@ -83,13 +83,13 @@
                 android:hint="@string/amount"
                 android:inputType="numberDecimal"
                 android:visibility="visible"
-                app:layout_constraintBottom_toTopOf="@+id/housing"
+                app:layout_constraintBottom_toTopOf="@+id/Housing"
                 app:layout_constraintEnd_toStartOf="@+id/submitTransp"
                 app:layout_constraintStart_toEndOf="@+id/TransportationText"
                 app:layout_constraintTop_toBottomOf="@+id/FoodExpenses" />
 
             <EditText
-                android:id="@+id/housing"
+                android:id="@+id/Housing"
                 android:layout_width="140dp"
                 android:layout_height="43dp"
                 android:layout_marginEnd="48dp"
@@ -116,7 +116,7 @@
                 android:visibility="visible"
                 app:layout_constraintEnd_toStartOf="@+id/submitMisc"
                 app:layout_constraintStart_toEndOf="@+id/MicellText"
-                app:layout_constraintTop_toBottomOf="@+id/housing" />
+                app:layout_constraintTop_toBottomOf="@+id/Housing" />
 
             <EditText
                 android:id="@+id/AddBudget"
@@ -170,7 +170,7 @@
                 android:hint="@string/housing_expenses"
                 android:inputType="textPersonName"
                 app:layout_constraintBottom_toTopOf="@+id/MicellText"
-                app:layout_constraintEnd_toStartOf="@+id/housing"
+                app:layout_constraintEnd_toStartOf="@+id/Housing"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/TransportationText" />
 
@@ -248,7 +248,7 @@
                 android:textSize="30sp"
                 app:layout_constraintBottom_toTopOf="@+id/submitMisc"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/housing"
+                app:layout_constraintStart_toEndOf="@+id/Housing"
                 app:layout_constraintTop_toBottomOf="@+id/submitTransp" />
 
             <Button

@@ -24,6 +24,7 @@ public class initialPrompt extends AppCompatActivity {
     private EditText budget;
     private Button enterInitial;
     private double initialAmount;
+    private ArrayList<Expense> budgetHistory = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -38,9 +39,11 @@ public class initialPrompt extends AppCompatActivity {
                 if (budget.getText().toString().trim().length() > 0){
                     initialAmount = Double.parseDouble(budget.getText().toString());
                     Intent myIntent = new Intent(initialPrompt.this, MainMenu.class);
-                    Bundle pass = new Bundle();
-                    pass.putDouble("Initial", initialAmount);
-                    myIntent.putExtras(pass);
+                    Bundle initial = new Bundle();
+                    budgetHistory.add(new Expense("Budget Addition", "Initial Budget", initialAmount));
+                    initial.putDouble("Initial", initialAmount);
+                    myIntent.putExtra("budgetHistory", budgetHistory);
+                    myIntent.putExtras(initial);
                     startActivity(myIntent);
                 }
             }

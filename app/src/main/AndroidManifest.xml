@@ -33,6 +33,10 @@
             android:name=".ShowHistory"
             android:label="Know Your Limit">
         </activity>
+        <activity
+            android:name=".PasswordLogin"
+            android:label="Know Your Limit">
+        </activity>
     </application>
 
 </manifest>

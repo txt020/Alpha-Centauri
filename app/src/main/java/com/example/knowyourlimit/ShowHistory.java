@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Html;
 import android.widget.TextView;
@@ -25,7 +26,9 @@ public class ShowHistory extends AppCompatActivity {
     private Button back;
     private TextView history;
 
-    private String totalHistory = "";
+    private String totalHistory;
+
+    SharedPreferences pass;
 
     //main method
     @Override
@@ -33,14 +36,18 @@ public class ShowHistory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.history);
 
+        pass = getApplicationContext().getSharedPreferences("savePassBool", 0);
+        SharedPreferences.Editor editor = pass.edit();
+
         history = findViewById(R.id.ShowHistory);
         back = findViewById(R.id.backButton);
 
-        budgetHistory = (ArrayList<Expense>) getIntent().getSerializableExtra("budgetHistory");
+        //budgetHistory = (ArrayList<Expense>) getIntent().getSerializableExtra("budgetHistory");
 
-        for (Expense e: budgetHistory)
-            totalHistory += e.toString();
+        //for (Expense e: budgetHistory)
+        //    totalHistory += e.toString();
 
+        totalHistory = (String) getIntent().getSerializableExtra("history");
         history.setText(totalHistory);
 
         back.setOnClickListener(new View.OnClickListener() {
