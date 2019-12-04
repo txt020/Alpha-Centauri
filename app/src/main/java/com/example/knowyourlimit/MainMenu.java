@@ -43,7 +43,7 @@ public class MainMenu extends AppCompatActivity {
     private EditText textFood, textTransportaion, textHousing, textMiscellaneous,
             foodDec, transpDec, housingDec, micellDec, amountAddBudget, textBudget;
     private Button submitFood, submitTransp, submitHousing, submitMisc, submitBudget, viewHistory,
-                    resetButton;
+            resetButton;
 
     //main method
     @Override
@@ -65,19 +65,30 @@ public class MainMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!isEmpty(textFood) && !isEmpty(foodDec)){
-                    history.addHistory(new Expense("Food",
-                            editTextString(textFood), editTextDouble(foodDec)));
-//                    budgetHistory.add(new Expense("Food",
-//                            editTextString(textFood), editTextDouble(foodDec)));
-                    totals[1] += editTextDouble(foodDec);
-                    data[0] = (float) totals[1];
-                    textFood.setText("");
-                    foodDec.setText("");
-                    editor.putFloat("food", (float)totals[1]);
-                    editor.putString("history", history.getHistory());
-                    editor.apply();
-                    displayTB();
-                    setupPieChart(data);
+                    if(editTextDouble(foodDec) <= 70 && editTextDouble(foodDec) > 0) { //Limits to change
+                        food(editor);
+                    } else
+                    {
+                        //pop up
+                        builder.setCancelable(true);
+                        builder.setMessage("Are you sure you entered: $" + editTextDouble(foodDec) +
+                                " for " + editTextString(textFood));
+                        builder.setPositiveButton("Confirm",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        food(editor);
+                                    }
+                                });
+                        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
                 }
             }
         });
@@ -86,19 +97,29 @@ public class MainMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!isEmpty(textTransportaion) && !isEmpty(transpDec)){
-                    history.addHistory(new Expense("Transportation",
-                            editTextString(textTransportaion), editTextDouble(transpDec)));
-//                    budgetHistory.add(new Expense("Transportation",
-//                            editTextString(textTransportaion), editTextDouble(transpDec)));
-                    totals[2] += editTextDouble(transpDec);
-                    data[1] = (float) totals[2];
-                    textTransportaion.setText("");
-                    transpDec.setText("");
-                    editor.putFloat("transp", (float)totals[2]);
-                    editor.putString("history", history.getHistory());
-                    editor.apply();
-                    displayTB();
-                    setupPieChart(data);
+                    if(editTextDouble(transpDec) <= 100 && editTextDouble(transpDec) > 0) { //Limits to change
+                        transp(editor);
+                    } else {
+                        //pop up
+                        builder.setCancelable(true);
+                        builder.setMessage("Are you sure you entered: $" + editTextDouble(transpDec) +
+                                " for " + editTextString(textTransportaion));
+                        builder.setPositiveButton("Confirm",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        transp(editor);
+                                    }
+                                });
+                        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
                 }
             }
         });
@@ -107,19 +128,29 @@ public class MainMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!isEmpty(textHousing) && !isEmpty(housingDec)){
-                    history.addHistory(new Expense("Housing",
-                            editTextString(textHousing), editTextDouble(housingDec)));
-//                    budgetHistory.add(new Expense("Housing",
-//                            editTextString(textHousing), editTextDouble(housingDec)));
-                    totals[3] += editTextDouble(housingDec);
-                    data[2] = (float) totals[3];
-                    textHousing.setText("");
-                    housingDec.setText("");
-                    editor.putFloat("housing", (float)totals[3]);
-                    editor.putString("history", history.getHistory());
-                    editor.apply();
-                    displayTB();
-                    setupPieChart(data);
+                    if(editTextDouble(housingDec) <= 3000 && editTextDouble(housingDec) > 0) { //Limits to change
+                        housing(editor);
+                    } else
+                    {
+                        builder.setCancelable(true);
+                        builder.setMessage("Are you sure you entered: $" + editTextDouble(housingDec) +
+                                " for " + editTextString(textHousing));
+                        builder.setPositiveButton("Confirm",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        housing(editor);
+                                    }
+                                });
+                        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
                 }
             }
         });
@@ -128,19 +159,30 @@ public class MainMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!isEmpty(textMiscellaneous) && !isEmpty(micellDec)){
-                    history.addHistory(new Expense("Miscellaneous",
-                            editTextString(textMiscellaneous), editTextDouble(micellDec)));
-//                    budgetHistory.add(new Expense("Miscellaneous",
-//                            editTextString(textMiscellaneous), editTextDouble(micellDec)));
-                    totals[4] += editTextDouble(micellDec);
-                    data[3] = (float) totals[4];
-                    textMiscellaneous.setText("");
-                    micellDec.setText("");
-                    editor.putFloat("misc", (float)totals[4]);
-                    editor.putString("history", history.getHistory());
-                    editor.apply();
-                    displayTB();
-                    setupPieChart(data);
+                    if(editTextDouble(micellDec) <= 3000 && editTextDouble(micellDec) > 0) {
+                        misc(editor);
+                    }
+                    else
+                    {
+                        builder.setCancelable(true);
+                        builder.setMessage("Are you sure you entered: $" + editTextDouble(micellDec) +
+                                " for " + editTextString(textMiscellaneous));
+                        builder.setPositiveButton("Confirm",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        misc(editor);
+                                    }
+                                });
+                        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
                 }
             }
         });
@@ -204,6 +246,71 @@ public class MainMenu extends AppCompatActivity {
                 dialog.show();
             }
         });
+    }
+
+
+    private void food(SharedPreferences.Editor editor){
+        history.addHistory(new Expense("Food",
+                editTextString(textFood), editTextDouble(foodDec)));
+//                      budgetHistory.add(new Expense("Food",
+//                            editTextString(textFood), editTextDouble(foodDec)));
+        totals[1] += editTextDouble(foodDec);
+        data[0] = (float) totals[1];
+        textFood.setText("");
+        foodDec.setText("");
+        editor.putFloat("food", (float) totals[1]);
+        editor.putString("history", history.getHistory());
+        editor.apply();
+        displayTB();
+        setupPieChart(data);
+    }
+
+    private void transp(SharedPreferences.Editor editor){
+        history.addHistory(new Expense("Transportation",
+                editTextString(textTransportaion), editTextDouble(transpDec)));
+//      budgetHistory.add(new Expense("Transportation",
+//              editTextString(textTransportaion), editTextDouble(transpDec)));
+        totals[2] += editTextDouble(transpDec);
+        data[1] = (float) totals[2];
+        textTransportaion.setText("");
+        transpDec.setText("");
+        editor.putFloat("transp", (float)totals[2]);
+        editor.putString("history", history.getHistory());
+        editor.apply();
+        displayTB();
+        setupPieChart(data);
+    }
+
+    private void housing(SharedPreferences.Editor editor){
+        history.addHistory(new Expense("Housing",
+                editTextString(textHousing), editTextDouble(housingDec)));
+//      budgetHistory.add(new Expense("Housing",
+//              editTextString(textHousing), editTextDouble(housingDec)));
+        totals[3] += editTextDouble(housingDec);
+        data[2] = (float) totals[3];
+        textHousing.setText("");
+        housingDec.setText("");
+        editor.putFloat("housing", (float) totals[3]);
+        editor.putString("history", history.getHistory());
+        editor.apply();
+        displayTB();
+        setupPieChart(data);
+    }
+
+    private void misc(SharedPreferences.Editor editor){
+        history.addHistory(new Expense("Miscellaneous",
+                editTextString(textMiscellaneous), editTextDouble(micellDec)));
+//      budgetHistory.add(new Expense("Miscellaneous",
+//      editTextString(textMiscellaneous), editTextDouble(micellDec)));
+        totals[4] += editTextDouble(micellDec);
+        data[3] = (float) totals[4];
+        textMiscellaneous.setText("");
+        micellDec.setText("");
+        editor.putFloat("misc", (float)totals[4]);
+        editor.putString("history", history.getHistory());
+        editor.apply();
+        displayTB();
+        setupPieChart(data);
     }
 
     private void reset(SharedPreferences pass, SharedPreferences.Editor editor) {
