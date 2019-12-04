@@ -159,7 +159,7 @@ public class MainMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!isEmpty(textMiscellaneous) && !isEmpty(micellDec)){
-                    if(editTextDouble(micellDec) <= 3000 && editTextDouble(micellDec) > 0) {
+                    if(editTextDouble(micellDec) <= 100 && editTextDouble(micellDec) > 0) {
                         misc(editor);
                     }
                     else
