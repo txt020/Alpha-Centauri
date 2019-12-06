@@ -339,8 +339,9 @@ public class MainMenu extends AppCompatActivity {
             Bundle b = getIntent().getExtras();
             totals[5] = b.getDouble("Initial");
             editor.putFloat("initial", (float)b.getDouble("Initial"));
-            editor.apply();
             history.addHistory(new Expense("Budget Addition", "Initial Budget", totals[5]));
+            editor.putString("history", history.getHistory());
+            editor.apply();
         } else {
             totals[0] = pass.getFloat("total", 0);
             totals[1] = pass.getFloat("food", 0);
