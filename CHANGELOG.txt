@@ -1,0 +1,9 @@
+changelog final release
+
+added ability to create password and lock app when closed
+added new screen to apply initial budget on first login
+added ability to add a description to each expense
+added ability to view the expense history on a separate screen
+added ability to reset all expenses and history
+data is now stored when app is closed
+added popups to indiciate if amounts entered are not correct
